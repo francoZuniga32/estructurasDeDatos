@@ -54,7 +54,39 @@ operaciones:
 
   //Devuelve una cadena de caracteres enlistando los elmenetos en el orden en el que fuerno apilados
 
+### el UML de la clase pila
 
+---
+
+PIla
+
+---
+
+-TAMANIO: int
+
+-arreglo: array[0,...,TAMANIO-1] de tipoObjeto/Elemento
+
+-tope:int = -1
+
+---
+
++Pila()
+
++apilar(TipoElemento):boolean
+
++desapila():boolean
+
++obtenerTope():TipoElemento
+
++esVacia():boolean
+
++vaciar()
+
++clone():Pila
+
++toString():String
+
+---
 
 ## Implementacion Estatica de pila
 
@@ -66,14 +98,32 @@ public class Pila{
 	private int tope;
 	private int TAMANIO;
 	
-	public Pila(){
-		this.arreglo = new Object[this.TAMANIO];
+	public Pila(int longitud){
+		this.arreglo = new Object[longitud];
 		this.tope = -1;
 	}
 }
 ```
 
-de esta forma declaramos el 
+de esta forma declaramos la pila y la construimos, donde le definimos el tope de la pila, esto combiene para poder probar la pila, en una implementacion de pila estatica tenemos que definirla ocultando el tamaño de la pila. en caso de que la persona sobrepase la pila devolvemos el erro *stackOverflow* o desbordamiento de pila.
+
+### implementacion apilar
+
+```java
+public boolean apilar(Object elemento){
+	boolean retorno = false;
+    //si no esta llena
+    if(this.tope < this.TAMANIO - 1){
+        this.tope++;
+        this.array[this.tope] = elemento;
+        retorno = true;
+    }
+    
+    return retorno;
+}
+```
+
+
 
 
 
