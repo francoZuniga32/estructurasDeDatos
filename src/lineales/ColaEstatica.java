@@ -7,18 +7,20 @@ package lineales;
 public class ColaEstatica {
     private static final int TAMANIO = 10;
     private Object[] arreglo;
-    private int fin = 0;
-    private int frente = 0;
+    public int fin;
+    public int frente;
     
     public ColaEstatica(){
         //creamos el arreglo
-        arreglo = new Object[this.TAMANIO];
+        this.arreglo = new Object[this.TAMANIO];
+        this.frente = 0;
+        this.fin = 0;
     }
     
     /** meter un elemento en la cola */
     public boolean poner(Object elemento){
         boolean retorno = false;
-        if(!this.estaLlena()){
+        if(!(((this.fin + 1) % this.TAMANIO) == this.frente)){
             this.arreglo[this.fin] = elemento;
             this.fin = (this.fin + 1) % this.TAMANIO;
             retorno = true;
@@ -66,7 +68,7 @@ public class ColaEstatica {
             //[fr, E2,...,fn,...,En]
             if(this.frente < this.fin){
                 int i = this.frente;
-                while(i <= this.frente){
+                while(i <= this.fin){
                     clon.arreglo[i] = this.arreglo[i];
                     i++;
                 }
@@ -74,7 +76,7 @@ public class ColaEstatica {
                 //[E1, E2,...,En-i,...,En]
                 //[fn, E2,...,fr,...,En]
                 int j = 0;
-                while(j <= this.frente){
+                while(j <= this.fin){
                     clon.arreglo[j] = this.arreglo[j];
                     j++;
                 }
@@ -99,15 +101,19 @@ public class ColaEstatica {
             //[fr, E2,...,fn,...,En]
             if(this.frente < this.fin){
                 int i = this.frente;
-                while(i <= this.frente){
-                    retorno = retorno + this.arreglo[i].toString();
+                while(i < this.fin){
+                    if(i == this.fin - 1){
+                        retorno = retorno+"" + this.arreglo[i].toString();   
+                    }else{
+                        retorno = retorno+ "," + this.arreglo[i].toString();   
+                    }
                     i++;
                 }
             }else{
                 //[E1, E2,...,En-i,...,En]
                 //[fn, E2,...,fr,...,En]
                 int j = 0;
-                while(j <= this.frente){
+                while(j <= this.fin){
                     retorno = retorno + this.arreglo[j].toString();
                     j++;
                 }
@@ -132,12 +138,5 @@ public class ColaEstatica {
         return retorno;
     }
     
-    /** metodo esta llena */
-    private boolean estaLlena(){
-        boolean retorno = false;
-        if((this.fin + 1) % this.TAMANIO == this.frente){
-            retorno = true;
-        }
-        return retorno;
-    }
+
 }
