@@ -4,10 +4,19 @@ package lineales;
 public class PilaDinamica {
     private Nodo tope;
     
+    /**
+     * contructor de pila dinamica:
+     * construimos una pila nueva
+     */
     public PilaDinamica(){
         this.tope = null;
     }
     
+    /**
+     * apilamos un elemento en la pila
+     * @param elemento
+     * @return booleano
+     */
     public boolean apilar(Object elemento){
         //creamos un nodo y le enlasamos con el tope
         Nodo nuevo = new Nodo(elemento, this.tope);
@@ -17,6 +26,10 @@ public class PilaDinamica {
         return true;
     }
     
+    /**
+     * sacamos el elemento tope de la pila 
+     * @return booleano
+     */
     public boolean desapilar(){
         boolean retorno = false;
         if(!this.esVacia()){
@@ -27,10 +40,18 @@ public class PilaDinamica {
         return retorno;
     }
     
+    /**
+     * obtenemos el elemento tope de la pila
+     * @return Object
+     */
     public Object obtenerTope(){
         return this.tope.getElemento();
     }
     
+    /**
+     * verificamos si la pila esta vacia
+     * @return boolean
+     */
     public boolean esVacia(){
         boolean retorno = false;
         if(this.tope == null){
@@ -38,12 +59,18 @@ public class PilaDinamica {
         }
         return retorno;
     }    
-
+    
+    /**
+     * vaciamos la pila
+     */
     public void vaciar(){
         this.tope = null;
     }
     
-    //to string
+    /**
+     * retornamos una cadena con la pila en el orden en que fue apilado
+     * @return String
+     */
     public String toString(){
         String retorno = "Pila vacia";
         
@@ -66,20 +93,32 @@ public class PilaDinamica {
         }
         return retorno;
     }
-    public PilaDinamica clonarRecursivo(){
+    
+    /**
+     * retornamos un clon de la pila actual
+     * @return PilaDinamica
+     */
+    
+    public PilaDinamica clone(){
         PilaDinamica clon = new PilaDinamica();
-        this.clonarRecursivoPaso(clon,this.tope);
+        this.cloneRecursivoPaso(clon, this.tope);
         return clon;
     }
     
-    private void clonarRecursivoPaso(PilaDinamica pilaClon, Nodo actual){
+    /**
+     * es el paso recursivo para armar la pila clon
+     * @param pilaClon
+     * @param enlace 
+     */
+    private void cloneRecursivoPaso(PilaDinamica pilaClon, Nodo enlace){
         
-        if(actual != null){
-            clonarRecursivoPaso(pilaClon,actual.getEnlace());
-            pilaClon.apilar(actual.getElemento());
+        if(enlace != null){
+            //nos movemos al siguiente enlace
+            Nodo enlaceTope = enlace.getEnlace();
+            //llamamos a la funcion recursivamente
+            cloneRecursivoPaso(pilaClon, enlaceTope);
+            //apilamos los elementos del nodo cuando salimos
+            pilaClon.tope = new Nodo(enlace.getElemento(), pilaClon.tope);
         }
-        
     }
-    
-    
 }

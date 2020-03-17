@@ -460,31 +460,27 @@ podemos emplear muchos otros algoritmos de desapilado, pero el primero hace uso 
 ### implemetacion clon
 
 ```java
-public Pila clon(){
-    //creamos la pila clon
-    Pila clon = new Pila();
-    pasoClon(clon);
-    return clon;
+public PilaDinamica clone(){
+    PilaDinamica clon = new PilaDinamica();
+    this.cloneRecursivoPaso(clon, this.tope);
+	return clon;
 }
 
-private Nodo pasoClon(Pila clon){
-	//si la pila esta vacia llamamos al metodo
-    if(this.tope != null){
-        //obtenemos el tope
-        Object elementoTope = this.tope.getElemento();
-        Nodo enlaceTope = this.Tope.getElemento();
-        //desapilamos el tope
-        this.tope = enlaceTope;
+private void cloneRecursivoPaso(PilaDinamica pilaClon, Nodo enlace){        
+	if(enlace != null){
+        //obtenemos el elemento del tope
+        Object elementoTope = enlace.getElemento();
+        //nos movemos al siguiente enlace
+        Nodo enlaceTope = enlace.getEnlace();
         //llamamos a la funcion recursivamente
-        pasoClon(clon);
-        //cuando salimos apilamos las dos
-        clon.tope = Nodo(elementoTope, this.tope);
-        this.tope = Nodo(elementoTope, this.tope);
+        cloneRecursivoPaso(pilaClon, enlaceTope);
+        //cuando salimos apilamos los elementos del nodo cuando salimos
+    	pilaClon.tope = new Nodo(elementoTope, pilaClon.tope);
     }
 }
 ```
 
-En este metodo lo que hacemos es usar la funcion  de desapilado y de apilado donde primero guardamos el elemento del tope y el enlace.  Luego redefinimos el tope de la pila original, y volvemos a llamar a la funcion, asta que el tope este vacio (nulo), de esta forma desapilamos la pila. Cuando regresamos del llamado apilamos las dos a la vez. ! ojo con el orden si apilamos primero la pila actual, apilaremos el ultimo elemento 2 veces¡.
+En este metodo 
 
 ### Implementacion de toString
 
