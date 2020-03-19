@@ -1,14 +1,14 @@
 package lineales;
 
 //@author franco
-public class PilaDinamica {
+public class Pila {
     private Nodo tope;
     
     /**
      * contructor de pila dinamica:
      * construimos una pila nueva
      */
-    public PilaDinamica(){
+    public Pila(){
         this.tope = null;
     }
     
@@ -96,11 +96,11 @@ public class PilaDinamica {
     
     /**
      * retornamos un clon de la pila actual
-     * @return PilaDinamica
+     * @return Pila
      */
     
-    public PilaDinamica clone(){
-        PilaDinamica clon = new PilaDinamica();
+    public Pila clone(){
+        Pila clon = new Pila();
         this.cloneRecursivoPaso(clon, this.tope);
         return clon;
     }
@@ -110,7 +110,7 @@ public class PilaDinamica {
      * @param pilaClon
      * @param enlace 
      */
-    private void cloneRecursivoPaso(PilaDinamica pilaClon, Nodo enlace){
+    private void cloneRecursivoPaso(Pila pilaClon, Nodo enlace){
         
         if(enlace != null){
             //nos movemos al siguiente enlace

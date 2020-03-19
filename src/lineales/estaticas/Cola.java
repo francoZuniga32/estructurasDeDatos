@@ -1,16 +1,16 @@
 
-package lineales;
+package lineales.estaticas;
 
 /**
  * @author franco
  */
-public class ColaEstatica {
+public class Cola {
     private static final int TAMANIO = 10;
     private Object[] arreglo;
     public int fin;
     public int frente;
     
-    public ColaEstatica(){
+    public Cola(){
         //creamos el arreglo
         this.arreglo = new Object[this.TAMANIO];
         this.frente = 0;
@@ -59,8 +59,8 @@ public class ColaEstatica {
     }
     
     /** clonamos la cola */
-    public ColaEstatica clone(){
-        ColaEstatica clon = new ColaEstatica();
+    public Cola clone(){
+        Cola clon = new Cola();
         //si no esta vacia
         if(!esVacia()){
             //en caso de que el inicio sea menor a el fin

@@ -5,14 +5,17 @@
 package lineales;
 
 //@author franco
+
+import lineales.estaticas.Pila;
+
 public class lineales{
     /**
      * @param args the command line arguments
      */
-    public static boolean capicua(PilaEstatica pila,  int n){
+    public static boolean capicua(Pila pila,  int n){
         //verificamos si una pila pocee numeros capicua
-        PilaEstatica clon;
-        PilaEstatica aux1 = new PilaEstatica(n);
+        Pila clon;
+        Pila aux1 = new Pila(n);
         boolean retorno = false;
         
         //clonamos la pila
@@ -32,7 +35,7 @@ public class lineales{
     
     public static void main(String[] args) {
         //creacion de una pila estatica
-        PilaEstatica cosa1 = new PilaEstatica(6);
+        Pila cosa1 = new Pila(6);
         
         for (int i = 0; i < 6; i++) {
             if(cosa1.apilar(i)){
@@ -43,7 +46,7 @@ public class lineales{
         System.out.println(cosa1.toString());
         
         //metodo de clonacion
-        PilaEstatica cosa2 = cosa1.clonarRecursivo();
+        Pila cosa2 = cosa1.clonarRecursivo();
         
         //mostramos las dos pilas
         System.out.println("la cosa1 es:"+cosa1.toString()+"la cosa2 es"+cosa2.toString());
