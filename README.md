@@ -86,7 +86,7 @@ PIla
 
 ---
 
-### implementacion desapilar
+### Implementacion contructor
 
 En esta implementacion vamos a definir un espacio de memoria fijo con el cual vamos a trabajar. en el caso de java definimos esta longitud fija con un arreglo. por el principio de encapsulacion podemos definir que estos arreglos y variables para conocer el estado de la pila(vacia y llana) no pudan ser acceddidos.
 
@@ -94,10 +94,10 @@ En esta implementacion vamos a definir un espacio de memoria fijo con el cual va
 public class Pila{
 	private Object[] arreglo;
 	private int tope;
-	private int TAMANIO;
+	private static final int TAMANIO = 10;
 	
-	public Pila(int longitud){
-		this.arreglo = new Object[longitud];
+	public Pila(){
+		this.arreglo = new Object[this.TAMANIO];
 		this.tope = -1;
 	}
 }
@@ -105,18 +105,17 @@ public class Pila{
 
 de esta forma declaramos la pila y la construimos, donde le definimos el tope de la pila, esto combiene para poder probar la pila, en una implementacion de pila estatica tenemos que definirla ocultando el tamaño de la pila. en caso de que la persona sobrepase la pila devolvemos el erro *stackOverflow* o desbordamiento de pila.
 
-### implementacion apilar
+### Implementacion apilar
 
 ```java
 public boolean apilar(Object elemento){
-	boolean retorno = false;
-    //si no esta llena
-    if(this.tope < this.TAMANIO - 1){
-        this.tope++;
-        this.arreglo[this.tope] = elemento;
+   	boolean retorno = false;
+        
+    if(this.tope + 1 < this.TAMANIO){
+        this.tope ++;
+        this.array[this.tope] = elemento;
         retorno = true;
     }
-	//retornamos true en caso de poder apilar en caso contrario no apilo 
     return retorno;
 }
 ```
@@ -132,16 +131,17 @@ osea esta en la ultima pocicion. en ese caso no apila. En caso de que no este ll
 ```java
 public boolean desapilar(){
 	boolean retorno = false;
-    //verificamos si la estructura no esta vacia
-    if(this.tope > -1){
-        this.arreglo[this.tope] = null;
-        this.tope--;
+    //verificamos que la pila no este vacia
+    if(this.tope >= 0){
+        this.array[this.tope] = null;
+        this.tope --;
         retorno = true;
-    }
+    } 
+    return retorno;
 }
 ```
 
-En este caso si la pila esta vacia retorna falso.  si no lo esta lo que esta en el tope se *desreferecia* y el *Garbage Collector* o como lo llamo *pacman de java* se come esa memoria no usada nadie lo referencia a ese elemento.  luego diminuimos el tope, por ultimo retornamos verdadero.
+En este caso como.
 
 ### implementacion tope
 

@@ -1,4 +1,4 @@
-package lineales;
+package lineales.dinamicas;
 
 //@author franco
 public class Nodo {

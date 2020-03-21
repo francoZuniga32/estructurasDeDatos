@@ -26,7 +26,7 @@ public class Ejercicio21 {
         }
         
         //clonamos la pila y probamos el toString
-        Pila pila2 = pila1.clonar();
+        Pila pila2 = pila1.clone();
         System.out.println("la pila1: "+pila1.toString()+" la pila2: "+pila2.toString());
         
         //desapilamos la pila 2
@@ -51,7 +51,7 @@ public class Ejercicio21 {
         }
         
         //creamos una pila3 la clonamos y la vaciamos
-        Pila pila3 = pila1.clonar();
+        Pila pila3 = pila1.clone();
         System.out.println("la pila1: "+pila1.toString()+" la pila3: "+pila3.toString());
         System.out.println("Vaciamos la pila3");
         pila3.vaciar();
@@ -73,10 +73,10 @@ public class Ejercicio21 {
         boolean retorno = true; 
         Pila aux = new Pila();
         //clonamos la pila en un auxiliar con el que vamos a trabajar
-        Pila desapiladoAuxiliar = evaluar.clonar();
-        Pila desapiladoEvalaucion = evaluar.clonar();
+        Pila desapiladoAuxiliar = evaluar.clone();
+        Pila desapiladoEvalaucion = evaluar.clone();
         //desapilasmo y apilamos en aux1
-        while(!desapiladoAuxiliar.esVacio()){
+        while(!desapiladoAuxiliar.esVacia()){
             /*
             de esta manera obtenemos una pila inversa a la entrada por parametro
             */
@@ -92,7 +92,7 @@ public class Ejercicio21 {
         * desapilamos las dos y comparamos los elementos
         */
         
-        while(!desapiladoEvalaucion.esVacio() && retorno){
+        while(!desapiladoEvalaucion.esVacia()&& retorno){
             //obtenemos el tope de las dos pilas
             if(desapiladoEvalaucion.obtenerTope().toString().compareTo(aux.obtenerTope().toString()) != 0){
                 //si son distintas

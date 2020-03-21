@@ -1,4 +1,4 @@
-package lineales;
+package lineales.dinamicas;
 
 //@author franco
 public class Pila {
@@ -45,7 +45,13 @@ public class Pila {
      * @return Object
      */
     public Object obtenerTope(){
-        return this.tope.getElemento();
+        Object retorno;
+        if(!esVacia()){
+            retorno = this.tope.getElemento();   
+        }else{
+            retorno = null;
+        }
+        return retorno;
     }
     
     /**
@@ -75,23 +81,23 @@ public class Pila {
         String retorno = "Pila vacia";
         
         if(this.tope != null){
-            retorno = "";
-            //se ubica en el tope para recorrer la pila
-            Nodo aux = this.tope;
-            retorno = "[";
-            
-            //recorremos los enlaces
-            while(aux != null){
-                //concatenamos el elmento
-                retorno = retorno + aux.getElemento().toString();
-                aux = aux.getEnlace();
-                if(aux != null){
-                    retorno = retorno + ",";
-                }
-            }
-            retorno = retorno + "]";
+            retorno = "["+ toStringPaso(this.tope) +"]";
+        }else{
+            retorno = "Pila Vacia!";
         }
         return retorno;
+    }
+    
+    private String toStringPaso(Nodo actual){
+        String elemento = "";
+        if(actual.getEnlace() != null){
+            //obtenemos el valor del nodo
+            //concatenamos el llamado con el elemento del siguiente
+            elemento = this.toStringPaso(actual.getEnlace()) +","+ actual.getElemento().toString();   
+        }else{
+            elemento = actual.getElemento().toString();
+        }
+        return elemento;
     }
     
     /**

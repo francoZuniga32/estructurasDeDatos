@@ -1,7 +1,9 @@
 
-package lineales;
+package lineales.testLineales;
 
-public class testPilaDinamica {
+import lineales.dinamicas.Pila;
+
+public class Ejercicio22 {
     public static void main(String[] args) {
         Pila pila1 = new Pila();
         

@@ -64,7 +64,7 @@ public class Pila {
      * verifica si la pila esta vacia
      * @return true en caso de estarlo y false en caso de que no
      */
-    public boolean esVacio(){
+    public boolean esVacia(){
         boolean retorno = false;
         if(this.tope < 0){
             retorno = true;
@@ -88,7 +88,7 @@ public class Pila {
      * clonamos la pila actual y la retornamos
      * @return la pila creada
      */
-    public Pila clonar(){
+    public Pila clone(){
         Pila clon = new Pila();
         int i = 0;
         
@@ -105,14 +105,22 @@ public class Pila {
      * @return cadena con la pila en orden de apilado (como se la apilo)
      */
     public String toString(){
-        String cadena = "[";
+        String cadena = "";
         int i = 0;
         
-        while(i <= this.tope){
-            cadena = cadena+ " " + this.array[i].toString();
-            i++;
+        if(!esVacia()){
+            cadena = "[";
+            while(i <= this.tope){
+               cadena = cadena + this.array[i].toString();
+               if(i < this.tope){
+                   cadena = cadena + ",";
+               }
+               i++;
+            }
+            cadena = cadena + "]";   
+        }else{
+            cadena = "Pila Vacia!";
         }
-        cadena = cadena + "]";
         return cadena;
     }
 }
