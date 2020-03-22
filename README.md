@@ -120,11 +120,11 @@ public boolean apilar(Object elemento){
 }
 ```
 
-En esta implementacion tenemos que apilar un elemento en el tipe de la pila, por lo cual tenemos que evaluar si la pila no esta llena, *tope* guarda el lugar del arreglo donde esta el tope. La condion se llena si: 
+En esta implementacion tenemos que apilar un elemento en el tope de la pila, por lo cual tenemos que evaluar si la pila no esta llena, *tope* guarda el lugar del arreglo donde esta el tope (donde se guardara el nuevo elemento) . La condion esta llena si: 
 $$
 tope = array.length()-1
 $$
-osea esta en la ultima pocicion. en ese caso no apila. En caso de que no este llena imcrementa el *tope* y guarda el valor del parametro en esa pocicion. Por ultimo retorna true.
+osea *tope* esta en la ultima pocicion. por esto miramos a la siguiente pocicion *(this.tope + 1 )* sea menor a la longitud del arreglo. En caso de que no este llena imcrementa el *tope* y guarda el valor del parametro en esa pocicion. Por ultimo retorna true.
 
 ### implementacion desapilar
 
@@ -132,7 +132,7 @@ osea esta en la ultima pocicion. en ese caso no apila. En caso de que no este ll
 public boolean desapilar(){
 	boolean retorno = false;
     //verificamos que la pila no este vacia
-    if(this.tope >= 0){
+    if(this.tope > -1){
         this.array[this.tope] = null;
         this.tope --;
         retorno = true;
@@ -141,7 +141,7 @@ public boolean desapilar(){
 }
 ```
 
-En este caso como.
+En este caso cuando desapilamos tenemos que evaluar que la pila no este vacia, esto es el tope es mayor a -1.  eliminamos lo que hay en tope *(this.array[this.tope] = null)*, y decrementamos el *tope*. finalmente retorna true.
 
 ### implementacion tope
 
@@ -212,43 +212,9 @@ public Pila clon(){
     }
     return clon;
 }
-
-//metodo iterativo 2
-public Pila clon2(){
-	//creamos la nueva pila y comenzamos a operar
-    Pila clon = new Pila(this.TAMANIO);
-    int i = 0;
-    //apilamos usando los metodos del objeto
-    while(i <= this.tope){
-        clon.apilar(this.arreglo[i]);
-        i++;
-    }
-    return clon;
-}
-
-//metodo recursivo
-public Pila clon3(){
-    //creamos una nueva pila
-    Pila clon = new Pila(this.TAMANIO);
-    clonPasoRecursivo(clon, this.tope);
-	return clon;
-}
-
-//metodo recursivo para apilar
-private void clonPasoRecursivo(Pila clon, int topeActual){
-    //nos mo movemos por la pila original desde el tope hacia abajo
-    if(topeActual > -1){
-        //vamos disminuyendo el tope asta que este sea -1
-        clonPasoRecursivo(clon, topeActual - 1);
-        //cuando salimos apilamos en el clon
-        clon.apilar(this.arreglo[topeActual]);
-    }
-}
 ```
 
-en este caso devolvemos la referencia de de la pila creada. tenemos dos metodos iterativos. el primero asigana los elementos de un arreglo(original) a otro(clon) usando una variable iteradora que va de 0 al tope. la segunda usa el metodo apilar, para ir apilando lo que hay en el arreglo del original usando de nuevo una variable iteradora asta el tope.
-
-El metoro recusivo usa un paso, el cual se le ingresa la referencia del clon, luego decrementamos una variable tope asta el caso base(pila vacia o tope = -1) en este caso sale. cuando sale lo que este en esa pocision es apilado en el clon. 
+usaremos un metodo que no es recursivo.  copiamos los elementos del arreglo de la pila actual a el arreglo de la pila destino donde *tope* es el limite de este copiado.
 
 ### implementacion de toString
 

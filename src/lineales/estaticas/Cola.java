@@ -20,7 +20,7 @@ public class Cola {
     /** meter un elemento en la cola */
     public boolean poner(Object elemento){
         boolean retorno = false;
-        if(!(((this.fin + 1) % this.TAMANIO) == this.frente)){
+        if(!this.estaLlena()){
             this.arreglo[this.fin] = elemento;
             this.fin = (this.fin + 1) % this.TAMANIO;
             retorno = true;
@@ -30,12 +30,11 @@ public class Cola {
     
     /** sacar un elemento de la cola */ 
     public boolean sacar(){
-        boolean retorno = true;
-        if(this.esVacia()){
-            retorno = false;
-        }else{
+        boolean retorno = false;
+        if( this.fin != this.frente ){
             this.arreglo[this.frente] = null;
             this.frente = (this.frente + 1) % this.TAMANIO;
+            retorno = true;
         }
         return retorno;
     }
@@ -43,7 +42,7 @@ public class Cola {
     /** obtener el frente de la cola */
     public Object obtenerFrente(){
         Object retorno = null;
-        if(!esVacia()){
+        if((this.fin != this.frente)){
             retorno = this.arreglo[this.frente];
         }
         return retorno;
@@ -61,33 +60,14 @@ public class Cola {
     /** clonamos la cola */
     public Cola clone(){
         Cola clon = new Cola();
-        //si no esta vacia
-        if(!esVacia()){
-            //en caso de que el inicio sea menor a el fin
-            //[E1, E2,...,En-i,...,En]
-            //[fr, E2,...,fn,...,En]
-            if(this.frente < this.fin){
-                int i = this.frente;
-                while(i <= this.fin){
-                    clon.arreglo[i] = this.arreglo[i];
-                    i++;
-                }
-            }else{
-                //[E1, E2,...,En-i,...,En]
-                //[fn, E2,...,fr,...,En]
-                int j = 0;
-                while(j <= this.fin){
-                    clon.arreglo[j] = this.arreglo[j];
-                    j++;
-                }
-                int k = this.frente;
-                while(k < this.arreglo.length){
-                    clon.arreglo[k] = clon.arreglo[k];
-                    k++;
-                }
-            }
+        int i = 0; 
+        while(i < this.TAMANIO){           
+            clon.arreglo[i] = this.arreglo[i];
+            i++;
         }
         
+        clon.frente = this.frente;
+        clon.fin = this.fin;
         return clon;
     }
     
@@ -95,32 +75,43 @@ public class Cola {
     public String toString(){
         String retorno = "[";
         
-        if(!esVacia()){
+        //verificamos que no este vacia
+        if(this.frente != this.fin){
             //en caso de que el inicio sea menor a el fin
             //[E1, E2,...,En-i,...,En]
             //[fr, E2,...,fn,...,En]
             if(this.frente < this.fin){
                 int i = this.frente;
                 while(i < this.fin){
-                    if(i == this.fin - 1){
-                        retorno = retorno+"" + this.arreglo[i].toString();   
+                    if(i == this.frente){
+                       retorno =  retorno + this.arreglo[i].toString();
                     }else{
-                        retorno = retorno+ "," + this.arreglo[i].toString();   
+                        retorno = retorno+ "," + this.arreglo[i].toString();
                     }
                     i++;
                 }
             }else{
                 //[E1, E2,...,En-i,...,En]
                 //[fn, E2,...,fr,...,En]
-                int j = 0;
-                while(j <= this.fin){
-                    retorno = retorno + this.arreglo[j].toString();
-                    j++;
-                }
                 int k = this.frente;
                 while(k < this.arreglo.length){
-                    retorno = retorno + this.arreglo[k].toString();
+                    if(k == this.frente){
+                        retorno = retorno + this.arreglo[k].toString();
+                    }else{
+                        retorno = retorno + "," + this.arreglo[k].toString();
+                    }
+                    
                     k++;
+                }
+                
+                int j = 0;
+                while(j < this.fin){
+                    if(j == this.frente){
+                        retorno = retorno + this.arreglo[j].toString();
+                    }else{
+                        retorno = retorno + "," + this.arreglo[j].toString();
+                    }
+                    j++;
                 }
             }
         }
@@ -138,5 +129,12 @@ public class Cola {
         return retorno;
     }
     
-
+    /** metodo para vaciar la cola */
+    private boolean estaLlena(){
+        boolean retorno = false;
+        if(((this.fin + 1) % this.TAMANIO ) == this.frente){
+            retorno = true;
+        }
+        return retorno;
+    }
 }
