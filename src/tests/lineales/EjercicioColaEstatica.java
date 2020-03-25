@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lineales.estaticas;
+package tests.lineales;
+
+import lineales.estaticas.Cola;
+import lineales.estaticas.Cola;
 
 /**
  *
@@ -19,7 +22,6 @@ public class EjercicioColaEstatica {
             }else{
                 System.out.println("Pila llena");
             }
-            System.out.println(cola1.frente+"-"+cola1.fin);
         }
         System.out.println("el frente actual: "+cola1.obtenerFrente());
         System.out.println(cola1.toString());
@@ -30,7 +32,6 @@ public class EjercicioColaEstatica {
             }else{
                 System.out.println("Pila vacia");
             }
-            System.out.println(cola1.frente+"-"+cola1.fin);
         }
         
         System.out.println("el frente actual: "+cola1.obtenerFrente());
@@ -42,7 +43,6 @@ public class EjercicioColaEstatica {
             }else{
                 System.out.println("cola llena");
             }
-            System.out.println(cola1.frente+"-"+cola1.fin);
         }
         
         System.out.println("el frente actual: "+cola1.obtenerFrente());
@@ -51,6 +51,10 @@ public class EjercicioColaEstatica {
         Cola cola2 = cola1.clone();
         
         System.out.println("el frente actual: "+cola1.obtenerFrente());
+        System.out.println(cola2.toString());
+        
+        cola2.sacar();
+        System.out.println("el frente actual:"+cola2.obtenerFrente());
         System.out.println(cola2.toString());
     }
 }

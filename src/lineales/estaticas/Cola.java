@@ -7,8 +7,8 @@ package lineales.estaticas;
 public class Cola {
     private static final int TAMANIO = 10;
     private Object[] arreglo;
-    public int fin;
-    public int frente;
+    private int fin;
+    private int frente;
     
     public Cola(){
         //creamos el arreglo

@@ -5,10 +5,12 @@
         <group>
             <file>file:/home/franco/NetBeansProjects/estructurasDeDatos/src/lineales/estaticas/Pila.java</file>
             <file>file:/home/franco/NetBeansProjects/estructurasDeDatos/src/lineales/estaticas/Cola.java</file>
-            <file>file:/home/franco/NetBeansProjects/estructurasDeDatos/src/lineales/dinamicas/Pila.java</file>
-            <file>file:/home/franco/NetBeansProjects/estructurasDeDatos/src/lineales/dinamicas/TestingPila1.java</file>
-            <file>file:/home/franco/NetBeansProjects/estructurasDeDatos/src/lineales/estaticas/EjercicioColaEstatica.java</file>
-            <file>file:/home/franco/NetBeansProjects/estructurasDeDatos/src/lineales/estaticas/TestingPila.java</file>
+            <file>file:/home/franco/NetBeansProjects/estructurasDeDatos/src/tests/lineales/EjercicioColaEstatica.java</file>
+            <file>file:/home/franco/NetBeansProjects/estructurasDeDatos/src/repaso/Fecha.java</file>
+            <file>file:/home/franco/NetBeansProjects/estructurasDeDatos/src/lineales/dinamicas/Cola.java</file>
+            <file>file:/home/franco/NetBeansProjects/estructurasDeDatos/src/lineales/dinamicas/testCola.java</file>
+            <file>file:/home/franco/NetBeansProjects/estructurasDeDatos/src/lineales/dinamicas/Nodo.java</file>
+            <file>file:/home/franco/NetBeansProjects/estructurasDeDatos/src/tests/lineales/Ejercicio23.java</file>
         </group>
     </open-files>
 </project-private>

@@ -77,7 +77,7 @@ public class Pila {
      * retornamos una cadena con la pila en el orden en que fue apilado
      * @return String
      */
-    public String toString(){
+    public String toString() {
         String retorno = "Pila vacia";
         
         if(this.tope != null){

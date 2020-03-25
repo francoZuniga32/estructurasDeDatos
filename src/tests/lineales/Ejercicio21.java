@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lineales.testLineales;
+package tests.lineales;
 
 import lineales.estaticas.Pila ;
 

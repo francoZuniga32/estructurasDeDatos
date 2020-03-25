@@ -1,5 +1,5 @@
 
-package lineales.testLineales;
+package tests.lineales;
 
 import lineales.dinamicas.Pila;
 
