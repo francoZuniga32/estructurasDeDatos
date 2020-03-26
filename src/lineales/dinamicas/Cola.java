@@ -61,7 +61,12 @@ public class Cola {
        return retorno;
    }
    
-   public Cola clone(){
+    public void vaciar(){
+       this.frente = null;
+       this.fin = null;
+   }
+   
+   public Cola clone2(){
        //creamos la cola clone
        Cola clon = new Cola();
        //obtenemos el tope de la cola actual
@@ -83,6 +88,31 @@ public class Cola {
        }
        clon.fin = auxiliarColaClon;
        return clon;
+   }
+   
+   public Cola clone(){
+       Cola clon = new Cola();
+       //tomamos el Nodo del frente de cola actual
+       Nodo aux = this.frente;
+       //conamos dicho elemento en la cola actual
+       clon.frente = new Nodo(aux.getElemento(), null);
+       //hacemos el llamado recursivo mandamos el aux y la cola
+       pasoClon(clon, aux, clon.frente);
+       
+       return clon;
+   }
+   
+   private void pasoClon(Cola clon, Nodo aux, Nodo puntero){
+       if(aux.getEnlace() == null){
+           //asignamos el final al nodo auxiliar
+           clon.fin = puntero;
+       }else{
+           aux = aux.getEnlace();
+           Nodo nuevo = new Nodo(aux.getElemento(), null);
+           puntero.setEnlace(nuevo);
+           puntero = nuevo;
+           pasoClon(clon, aux, puntero);
+       }
    }
    
    public String toString(){

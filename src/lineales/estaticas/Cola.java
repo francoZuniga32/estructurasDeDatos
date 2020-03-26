@@ -121,7 +121,7 @@ public class Cola {
     }
     
     /** metodo para vaciar la cola */
-    private boolean esVacia(){
+    public boolean esVacia(){
         boolean retorno = false;
         if(this.fin == this.frente){
             retorno = true;
@@ -130,7 +130,7 @@ public class Cola {
     }
     
     /** metodo para vaciar la cola */
-    private boolean estaLlena(){
+    public boolean estaLlena(){
         boolean retorno = false;
         if(((this.fin + 1) % this.TAMANIO ) == this.frente){
             retorno = true;
