@@ -2,11 +2,11 @@
 package tests.lineales;
 
 import lineales.estaticas.Cola;
-
+import repaso.Fecha;
 /**
  * @author franco
  */
-public class testCola {
+public class testColaTDA {
     static String sOk = "OK!", sErr = "ERROR";
     
     public static void main(String[] args) {
@@ -15,9 +15,9 @@ public class testCola {
         Cola cola1 = new Cola();
         //apilamos 10 elementos:
         for(int i = 0; i < 9; i++){
-            System.out.println("Se pone :"+i+"\t\t\t\t\t\t"+((cola1.poner(i)) ? sOk : sErr));
+            System.out.println("Se pone :"+i+"\t\t\t\t\t\t"+((cola1.poner(new Fecha(i, 1, 2020))) ? sOk : sErr));
         }
-        System.out.println("Pone 9 espera ok!(dinamico), ERROR(estatico)"+"\t\t"+((cola1.poner(9)) ? sOk : sErr));
+        System.out.println("Pone 9 espera ok!(dinamico), ERROR(estatico)"+"\t\t"+((cola1.poner(new Fecha(9, 1, 2020))) ? sOk : sErr));
         System.out.println("---------------------------------------------------");
         System.out.println("Probamos los demas metodos: sacar, poner, etc");
         System.out.print("espera \t0,1,2,3,4,5,6,7,8,9 (dinamico)\n \t0,1,2,3,4,5,6,7,8(estatico)");
@@ -25,8 +25,8 @@ public class testCola {
         System.out.println("---------------------------------------------------");
         System.out.println("Probamos la funcion sacar: sacamos 5 elementos del frente:");
         for (int j = 0; j < 4; j++) {
-            int tomado = (int) cola1.obtenerFrente();
-            System.out.println("Se saca :"+tomado+"\t\t"+((cola1.sacar()) ? sOk : sErr)+"\t\t\t\t--> " + cola1.toString());
+            Fecha tomado = (Fecha) cola1.obtenerFrente();
+            System.out.println("Se saca :"+tomado.toString()+"\t\t"+((cola1.sacar()) ? sOk : sErr)+"\t\t\t\t--> " + cola1.toString());
         }
         
         System.out.println("---------------------------------------------------");
@@ -38,9 +38,9 @@ public class testCola {
         System.out.println("---------------------------------------------------");
         System.out.println("Probamos los metodos poner para ver la funcionalidad de la cola:");
         for (int k = 0; k < 4; k++) {
-            System.out.println("Se pone :"+k+"\t\t\t\t\t\t"+((cola1.poner(k)) ? sOk : sErr));
+            System.out.println("Se pone :"+k+"\t\t\t\t\t\t"+((cola1.poner(new Fecha(k, 2, 2020))) ? sOk : sErr));
         }
-        System.out.println("Pone 9 espera ok!(dinamico), ERROR(estatico)"+"\t\t"+((cola1.poner(4)) ? sOk : sErr));
+        System.out.println("Pone 9 espera ok!(dinamico), ERROR(estatico)"+"\t\t"+((cola1.poner(new Fecha(4, 1, 2020))) ? sOk : sErr));
         
         System.out.println("Vemos que la cola2 nos se modifica:");
         System.out.println("Cola1: espera \t5,6,7,8,9,0,1,2,3,4(dinamico) \n \t\t5,6,7,8,0,1,2,3(estatico) \t\t-->"+cola1.toString());
