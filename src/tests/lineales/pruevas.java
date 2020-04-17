@@ -4,21 +4,18 @@ package tests.lineales;
 import lineales.dinamicas.Lista;
 
 public class pruevas {
+    
+    static String sOk = "OK!", sErr = "ERROR";
+    
     public static void main(String[] args) {
-        Lista L1 = new Lista();
+        Lista l1 = new Lista();
         
-        for (int i = 0; i < 10; i++) {
-            L1.insertar(i, i);
-        }
-        System.out.println(L1.toString());
-        Lista L2 = L1.invertir();
-        System.out.println(L2.toString());
-        System.out.println(L1.toString());
-        if( L1.eliminarApariciones(3)){
-            System.out.println("Se elimino");
-        }else{
-            System.out.println("No se elimino");
-        }
-        System.out.println(L1.toString());
+        System.out.println("Muestra lista vacia: \t\t\t\t\t--> " + l1.toString());
+	        System.out.println("Longitud de lista vacia:\t\t\t" + l1.longitud());
+	        System.out.print("Inserta 5 pos 5 espera FALSE: \t\t\t" + ((l1.insertar(5, 5)) ? sOk : sErr));
+	        System.out.println("\t--> " + l1.toString());
+                System.out.println("Longitud de lista vacia:\t\t\t" + l1.longitud());
+                System.out.print("Inserta 2 pos 1 espera TRUE: \t\t\t" + ((l1.insertar(2, 1)) ? sOk : sErr));
+	        System.out.println("\t--> " + l1.toString());
     }
 }

@@ -1,5 +1,4 @@
-
-package lineales.dinamicas;
+package entregaLista.lineales.dinamicas;
 
 /**
  * @author franco

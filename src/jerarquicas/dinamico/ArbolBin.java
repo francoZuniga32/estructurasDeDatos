@@ -94,6 +94,34 @@ public class ArbolBin {
         return retorno;
     }
     
+    private Object obtenerNodo(Object elemento){
+        //vamos a buscar por preorden el nodo arbol del arbol
+        Object retorno = null;
+        if(this.raiz != null){
+            //vamos a buscar el elemento en la raiz
+            retorno = obtenerNodoPaso(elemento, this.raiz);
+        }
+        return retorno;
+    }
+    
+    private Object obtenerNodoPaso(Object elemento, NodoArbol raiz){
+        //vamos a comparar en la raiz
+        Object retorno = null;
+        if(raiz.getElemento().toString().equals(elemento.toString())){
+            retorno = raiz;
+        }else{
+            //comprobamos si hay HI si lo hay llamamos
+            if(raiz.getIzquierdo() != null){
+                retorno = obtenerNodoPaso(elemento, raiz.getIzquierdo());
+            }
+            //comprobamos que tenemos HD y que no encontraramos el elemento por HI
+            if(raiz.getDerecho() != null && retorno == null){
+                retorno = obtenerNodoPaso(elemento, raiz.getDerecho());
+            }
+        }
+        return retorno;
+    }
+    
     /***
      * retorna true si el arbol esta vacio y si no false
      * @return boolean
