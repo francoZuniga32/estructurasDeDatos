@@ -1,4 +1,3 @@
-
 package lineales.dinamicas;
 
 /**
@@ -6,7 +5,7 @@ package lineales.dinamicas;
  * las operaciones que se realizan a continuacion tienen en cuanta el uso del recolector de basura de java
  * por lo que muchas de las operaciones implican el desreferenciar objetos.
  */
-public class Lista {
+public class Lista{
     private Nodo cabecera;
     private int longitud;
     

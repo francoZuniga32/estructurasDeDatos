@@ -540,7 +540,7 @@ public class ArbolBin {
         return retorno;
     }
     
-    public boolean verificarPatronAux(NodoArbol raiz, Lista listaPatron){
+    private boolean verificarPatronAux(NodoArbol raiz, Lista listaPatron){
         //verificamos si el elemento en el frente de la lista es igual a la raiz
         boolean retorno = false;
         if(raiz != null && !listaPatron.esVacia()){
@@ -563,4 +563,28 @@ public class ArbolBin {
         }
         return retorno;
     }
+    
+    public Lista frontera(){
+        Lista retorno = new Lista();
+        if(this.raiz != null){
+            fronteraAux(this.raiz, retorno);
+        }
+        return retorno;
+    }
+    
+    private void fronteraAux(NodoArbol raiz, Lista lista){
+        if(raiz != null){
+            if(raiz.getIzquierdo() == null && raiz.getDerecho() == null){
+                lista.insertar(raiz.getElemento(), 1);
+            }else{
+                if(raiz.getIzquierdo() != null){
+                    fronteraAux(raiz.getIzquierdo(), lista);
+                }
+                if(raiz.getDerecho() != null){
+                    fronteraAux(raiz.getDerecho(), lista);
+                }
+            }
+        }
+    }
+    
 }

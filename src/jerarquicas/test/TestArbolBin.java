@@ -121,13 +121,17 @@ public class TestArbolBin {
         System.out.println(A3.toString());
         
         Lista patron = new Lista();
-        System.out.println("insetamos A en la lista: "+(patron.insertar('A', 0)? sOk: sErr));
-        System.out.println("insetamos A en la lista: "+(patron.insertar('B', 1)? sOk: sErr));
-        System.out.println("insetamos A en la lista: "+(patron.insertar('D', 2)? sOk: sErr));
+        System.out.println("insetamos A en la lista: "+(patron.insertar('A', 1)? sOk: sErr));
+        System.out.println("insetamos B en la lista: "+(patron.insertar('C', 2)? sOk: sErr));
+        System.out.println("insetamos D en la lista: "+(patron.insertar('E', 3)? sOk: sErr));
+        System.out.println("insetamos D en la lista: "+(patron.insertar('G', 4)? sOk: sErr));
+        System.out.println(patron.toString());
         if(A1.vericarPatron(patron)){
-            System.out.println("la lista:"+patron.toString()+"esta en A1");
+            System.out.println("la lista: "+patron.toString()+" esta en A1");
         }else{
             System.out.println("la lista:"+patron.toString()+"no esta en A1");
         }
+        Lista frontera = A1.frontera();
+        System.out.println(frontera.toString());
     }
 }
