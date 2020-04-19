@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package jerarquicas.dinamico;
-import lineales.dinamicas.Cola;
+import lineales.dinamicas.*;
 /**
  *
  * @author franco
@@ -520,6 +520,45 @@ public class ArbolBin {
             
             if(derecho != null){
                 retorno = retorno + auxToString(derecho);
+            }
+        }
+        return retorno;
+    }
+    
+    public boolean vericarPatron(Lista listaPatron){
+        boolean retorno = false;
+        if(listaPatron.esVacia()){
+            if(this.raiz == null){
+                retorno = true;
+            }
+        }else{
+            if(this.raiz != null){
+                retorno = verificarPatronAux(this.raiz, listaPatron);
+            }
+        }
+           
+        return retorno;
+    }
+    
+    public boolean verificarPatronAux(NodoArbol raiz, Lista listaPatron){
+        //verificamos si el elemento en el frente de la lista es igual a la raiz
+        boolean retorno = false;
+        if(raiz != null && !listaPatron.esVacia()){
+            //comparamos con la raiz
+            Object primerElemento = listaPatron.recuperar(1);
+            if(raiz.getElemento().equals(primerElemento)){
+                //si esta sacamos este elemento en la lista y llamamos con el HI
+                boolean retornoIzquierdo = false;
+                listaPatron.eliminar(1);
+                retorno = true;
+                if(raiz.getIzquierdo() != null){
+                     retornoIzquierdo = verificarPatronAux(raiz.getIzquierdo(), listaPatron);
+                     retorno = retornoIzquierdo;
+                }
+                
+                if(raiz.getDerecho() != null && !retornoIzquierdo){
+                    retorno = verificarPatronAux(raiz.getDerecho(), listaPatron);
+                }
             }
         }
         return retorno;

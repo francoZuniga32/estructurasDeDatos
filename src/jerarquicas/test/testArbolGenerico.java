@@ -22,15 +22,17 @@ public class testArbolGenerico {
         System.out.println("insertamos J como hijo de C:"+(A1.insertar('J', 'C') ? sOk: sErr));
         System.out.println("insertamos K como hijo de F:"+(A1.insertar('K', 'F') ? sOk: sErr));
         
-        A1.listarPreorden();
+        System.out.print("Lista preorden: ");A1.listarPreorden();
+        System.out.print("Lista inorden: ");A1.listarInorden();
+        System.out.print("Lista posorden: ");A1.listarPosorden();
+        System.out.print("Lista niveles");A1.listarNiveles();
         
-        if(A1.pertenece('G')){
-            System.out.println("A pertenece al A1");
-        }else{
-            System.out.println("A no pertenece a A1");
-        }
-        
-        Lista L1 = A1.ansestros('J');
-        System.out.println(L1.toString());
+        System.out.println("\n");
+        System.out.println("A1 toString:");
+        System.out.println(A1.toString());
+    
+        ArbolGen A2 = A1.clone();
+        System.out.println("A2 toString:");
+        System.out.println(A2.toString());
     }
 }

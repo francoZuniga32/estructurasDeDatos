@@ -166,6 +166,107 @@ public class ArbolGen {
         return retorno;
     }
     
+    public int altura(){
+        int retorno = -1;
+        if(this.raiz != null){
+            retorno = retorno + alturaPaso(this.raiz);
+        }
+        return retorno;
+    }
+    
+    private int alturaPaso(NodoGen raiz){
+        int retorno = 0;
+        
+        //si la raiz no es null evaluamos
+        if(raiz != null){
+            retorno = 1;
+            //vamos a obtener el resultado de el hijo mas a la izquirda
+            NodoGen aux = raiz.getHijoIzquierdo();
+            int retornoHijos = 0;
+            //mientras alla hijos repite
+            while(aux != null){
+                int retornoLlamado = alturaPaso(aux);
+                if(retornoHijos <= retornoLlamado){
+                    retornoHijos = retornoLlamado;
+                }
+                aux = aux.getHermanoDerecho();
+            }
+            
+            retorno = retorno + retornoHijos;
+        }
+        
+        return retorno;
+    }
+    
+    public int nivel(Object elemento){
+        int retorno = -1;
+        
+        if(this.raiz != null){
+            retorno = retorno + nivelPaso(this.raiz, elemento);
+        }
+        
+        return retorno;
+    }
+    
+    
+    public int nivelPaso(NodoGen raiz, Object elemento){
+        int retorno = 0;
+        
+        if(raiz != null){
+            //si el elemento esta en el punto retornamos 1
+            if(raiz.getElemento().equals(elemento)){
+                retorno = 1;
+            }else{
+                //busamos por los hijos
+                NodoGen aux = raiz.getHijoIzquierdo();
+                int retornoHijos;
+                
+                while(aux != null && retorno == 0){
+                    retornoHijos = nivelPaso(aux, elemento);
+                    if(retornoHijos > 0){
+                        retorno = retornoHijos + 1;
+                    }
+                    aux = aux.getHermanoDerecho();
+                }
+            }
+        }
+        
+        return retorno;
+    }
+    
+    public Object padre(Object elemento){
+        Object retorno = null;
+        if(this.raiz != null){
+            if(!this.raiz.getElemento().equals(elemento)){
+                retorno = padrePaso(this.raiz, elemento);   
+            }
+        }
+        return retorno;
+    }
+    
+    private Object padrePaso(NodoGen raiz, Object elemento){
+        //
+        Object retorno = null;
+        if(raiz != null){
+            NodoGen aux = raiz.getHijoIzquierdo();
+            boolean control = true;
+            while(control && aux != null){
+                if(aux.getElemento().equals(elemento)){
+                    retorno = raiz.getElemento();
+                    control = false;
+                }else{
+                    Object retornoHijo = padrePaso(aux, elemento);
+                    if(retornoHijo != null){
+                        retorno = retornoHijo;
+                        control = false;
+                    }
+                }
+                aux = aux.getHermanoDerecho();
+            }
+        }
+        return retorno;
+    }
+    
     /***
      * listamos en preorden los elementos del arbol
      */
@@ -191,5 +292,141 @@ public class ArbolGen {
             //pasamos al siguiente hermano
             aux = aux.getHermanoDerecho();
         }
+    }
+    
+    public void listarInorden(){
+        if(this.raiz != null){
+            inordenPaso(this.raiz);
+        }
+    }
+    
+    private void inordenPaso(NodoGen raiz){
+        //si la subraiz es no es null
+        if(raiz != null){
+            //vamos a listar el 
+            NodoGen aux = raiz.getHijoIzquierdo();
+            if(aux != null){
+                //recorremos el primer hijo en inorden
+                inordenPaso(aux);
+                //visitamos la raiz
+                System.out.print(raiz.getElemento().toString()+",");
+                //recorremos el resto de hijos en inorden
+                aux = aux.getHermanoDerecho();
+                while(aux != null){
+                    inordenPaso(aux);
+                    aux = aux.getHermanoDerecho();
+                }
+            }else{
+                System.out.print(raiz.getElemento().toString()+",");
+            }
+        }
+    }
+    
+    public void listarPosorden(){
+        if(this.raiz != null){
+            posordenPaso(this.raiz);
+        }
+    }
+    
+    private void posordenPaso(NodoGen raiz){
+        if(raiz != null){
+            NodoGen aux = raiz.getHijoIzquierdo();
+            while(aux != null){
+                posordenPaso(aux);
+                aux = aux.getHermanoDerecho();
+            }
+            
+            System.out.print(raiz.getElemento().toString()+",");
+        }
+    }
+    
+    public void listarNiveles(){
+        //vamos a usar una cola para iterar
+        Cola q = new Cola();
+        q.poner(this.raiz);
+        
+        while(!q.esVacia()){
+            NodoGen aux = (NodoGen) q.obtenerFrente();
+            q.sacar();
+            System.out.print(aux.getElemento().toString());
+            aux = aux.getHijoIzquierdo();
+            while(aux != null){
+                q.poner(aux);
+                aux = aux.getHermanoDerecho();
+            }
+        }
+        
+    }
+    
+    public ArbolGen clone(){
+        ArbolGen clon = new ArbolGen();
+        //verificamos si existe la raiz del arbol
+        if(this.raiz != null){
+            //clonenamos la raiz del alrbol
+            clon.raiz = new NodoGen(this.raiz.getElemento(), null, null);
+            //relizamos el llamado recursivo
+            cloneAux(this.raiz, clon.raiz);
+        }
+        return clon;
+    }
+    
+    private void cloneAux(NodoGen raiz, NodoGen raizClone){
+        //vamos a evaluar que el nodo raiz no se anull
+        if(raiz != null){
+            //en este caso vamos a clonar el elemento de los hijos de raiz
+            NodoGen aux = raiz.getHijoIzquierdo();
+            
+            if(aux != null){
+                //creamos el hijos izquierdo de el raizclone
+                raizClone.setHijoIzquierdo(new NodoGen(aux.getElemento(), null, null));
+                //nos pocicionamos en el HI de el nodoClon
+                NodoGen auxClone = raizClone.getHijoIzquierdo();
+                while(aux.getHermanoDerecho() != null){
+                    //clonamos los nodos hijos de raizClone
+                    //nos movemos al siguiente hijo
+                    aux = aux.getHermanoDerecho();
+                    auxClone.setHermanoDerecho(new NodoGen(aux.getElemento(), null, null));
+                    auxClone = auxClone.getHermanoDerecho();
+                }
+
+                //vamos a llamar ocn los demas hijos
+                aux = raiz.getHijoIzquierdo();
+                auxClone = raizClone.getHijoIzquierdo();
+                while(aux != null){
+                    cloneAux(aux, auxClone);
+                    aux = aux.getHermanoDerecho();
+                    auxClone = auxClone.getHermanoDerecho();
+                }
+            }
+        }
+    }
+    
+    public void vaciar(){
+        this.raiz = null;
+    }
+    
+    public String toString(){
+        return toStringAux(this.raiz);
+    }
+    
+    private String toStringAux(NodoGen raiz){
+        String retorno = "";
+        if(raiz != null){
+            //visitamos el nodo n
+            retorno += raiz.getElemento().toString()+"->";
+            NodoGen aux = raiz.getHijoIzquierdo();
+            while(aux != null){
+                retorno += aux.getElemento().toString()+",";
+                aux = aux.getHermanoDerecho();
+            }
+            
+            //comenzamos el recorrido por los hijos de la subraiz
+            aux = raiz.getHijoIzquierdo();
+            while(aux != null){
+                retorno += "\n"+toStringAux(aux);
+                aux = aux.getHermanoDerecho();
+            }
+        }
+        return retorno;
     }
 }

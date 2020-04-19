@@ -5,6 +5,7 @@
  */
 package jerarquicas.test;
 import jerarquicas.dinamico.ArbolBin;
+import lineales.dinamicas.*;
 /**
  *
  * @author franco
@@ -119,5 +120,14 @@ public class TestArbolBin {
         System.out.println("A3");
         System.out.println(A3.toString());
         
+        Lista patron = new Lista();
+        System.out.println("insetamos A en la lista: "+(patron.insertar('A', 0)? sOk: sErr));
+        System.out.println("insetamos A en la lista: "+(patron.insertar('B', 1)? sOk: sErr));
+        System.out.println("insetamos A en la lista: "+(patron.insertar('D', 2)? sOk: sErr));
+        if(A1.vericarPatron(patron)){
+            System.out.println("la lista:"+patron.toString()+"esta en A1");
+        }else{
+            System.out.println("la lista:"+patron.toString()+"no esta en A1");
+        }
     }
 }
