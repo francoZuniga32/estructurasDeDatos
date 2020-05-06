@@ -270,25 +270,27 @@ public class ArbolGen {
     /***
      * listamos en preorden los elementos del arbol
      */
-    public void listarPreorden(){
+    public Lista listarPreorden(){
+        Lista retorno = new Lista();
         if(this.raiz != null){
-            preordenPaso(this.raiz);
+            preordenPaso(this.raiz, retorno);
         }
+        return retorno;
     }
     
     /***
      * paso para recorrer en preorden
      * @param raiz 
      */
-    private void preordenPaso(NodoGen raiz){
+    private void preordenPaso(NodoGen raiz, Lista retorno){
         //vamos a mostrar el elemento de la raiz
-        System.out.print(raiz.getElemento().toString()+",");
+        retorno.insertar(raiz.getElemento(), retorno.longitud()+1);
         
         //vamos a recorrer los hermanos usando el mismo algitmo
         NodoGen aux = raiz.getHijoIzquierdo();
         while(aux != null){
             //usamos preorden con el aux actual
-            preordenPaso(aux);
+            preordenPaso(aux, retorno);
             //pasamos al siguiente hermano
             aux = aux.getHermanoDerecho();
         }
