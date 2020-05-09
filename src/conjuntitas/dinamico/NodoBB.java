@@ -5,13 +5,13 @@ package conjuntitas.dinamico;
  */
 public class NodoBB {
     private Comparable elemento;
-    private NodoBB nodoIzquierdo;
-    private NodoBB nodoDerecho;
+    private NodoBB izquirdo;
+    private NodoBB derecho;
     
     public NodoBB(Comparable argElemento, NodoBB argNodoIzquierdo, NodoBB argNodoDerecho){
         this.elemento = argElemento;
-        this.nodoIzquierdo = argNodoIzquierdo;
-        this.nodoDerecho = argNodoDerecho;
+        this.izquirdo = argNodoIzquierdo;
+        this.derecho = argNodoDerecho;
     }
     
     public void setElemento(Comparable argElemento){
@@ -22,19 +22,19 @@ public class NodoBB {
         return this.elemento;
     }
     
-    public void setNodoIzquierdo(NodoBB argNodoIzquierdo){
-        this.nodoIzquierdo = argNodoIzquierdo;
+    public void setIzquierdo(NodoBB argNodoIzquierdo){
+        this.izquirdo = argNodoIzquierdo;
     }
     
-    public NodoBB getNodoIzquierdo(){
-        return this.nodoIzquierdo;
+    public NodoBB getIzquierdo(){
+        return this.izquirdo;
     }
     
-    public void setNodoDerecho(NodoBB argNodoDerecho){
-        this.nodoDerecho = argNodoDerecho;
+    public void setDerecho(NodoBB argNodoDerecho){
+        this.derecho = argNodoDerecho;
     }
     
-    public NodoBB getNodoDerecho(){
-        return this.nodoDerecho;
+    public NodoBB getDerecho(){
+        return this.derecho;
     }
 }

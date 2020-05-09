@@ -115,7 +115,7 @@ public class ArbolGen {
      * @param elemento
      * @return 
      */
-    public Lista ansestros(Object elemento){
+    public Lista ancentros(Object elemento){
         Lista retorno = new Lista();
         if(this.raiz != null){
             ansestrosPaso(this.raiz, elemento, retorno);
@@ -296,26 +296,28 @@ public class ArbolGen {
         }
     }
     
-    public void listarInorden(){
+    public Lista listarInorden(){
+        Lista inorden = new Lista();
         if(this.raiz != null){
-            inordenPaso(this.raiz);
+            inordenPaso(this.raiz, inorden);
         }
+        return inorden;
     }
     
-    private void inordenPaso(NodoGen raiz){
+    private void inordenPaso(NodoGen raiz, Lista inorden){
         //si la subraiz es no es null
         if(raiz != null){
             //vamos a listar el 
             NodoGen aux = raiz.getHijoIzquierdo();
             if(aux != null){
                 //recorremos el primer hijo en inorden
-                inordenPaso(aux);
+                inordenPaso(aux, inorden);
                 //visitamos la raiz
-                System.out.print(raiz.getElemento().toString()+",");
+                inorden.insertar(raiz.getElemento(), inorden.longitud() +1);
                 //recorremos el resto de hijos en inorden
                 aux = aux.getHermanoDerecho();
                 while(aux != null){
-                    inordenPaso(aux);
+                    inordenPaso(aux, inorden);
                     aux = aux.getHermanoDerecho();
                 }
             }else{
@@ -324,21 +326,23 @@ public class ArbolGen {
         }
     }
     
-    public void listarPosorden(){
+    public Lista listarPosorden(){
+        Lista posorden = new Lista();
         if(this.raiz != null){
-            posordenPaso(this.raiz);
+            posordenPaso(this.raiz, posorden);
         }
+        return posorden;
     }
     
-    private void posordenPaso(NodoGen raiz){
+    private void posordenPaso(NodoGen raiz, Lista posorden){
         if(raiz != null){
             NodoGen aux = raiz.getHijoIzquierdo();
             while(aux != null){
-                posordenPaso(aux);
+                posordenPaso(aux, posorden);
                 aux = aux.getHermanoDerecho();
             }
             
-            System.out.print(raiz.getElemento().toString()+",");
+            posorden.insertar(raiz.getElemento(), posorden.longitud() +1);
         }
     }
     
