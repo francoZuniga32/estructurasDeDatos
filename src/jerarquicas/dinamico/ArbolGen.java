@@ -183,7 +183,7 @@ public class ArbolGen {
             //vamos a obtener el resultado de el hijo mas a la izquirda
             NodoGen aux = raiz.getHijoIzquierdo();
             int retornoHijos = 0;
-            //mientras alla hijos repite
+            //mientras halla hijos repite
             while(aux != null){
                 int retornoLlamado = alturaPaso(aux);
                 if(retornoHijos <= retornoLlamado){
@@ -395,7 +395,7 @@ public class ArbolGen {
                     auxClone = auxClone.getHermanoDerecho();
                 }
 
-                //vamos a llamar ocn los demas hijos
+                //vamos a llamar con los demas hijos
                 aux = raiz.getHijoIzquierdo();
                 auxClone = raizClone.getHijoIzquierdo();
                 while(aux != null){
