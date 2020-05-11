@@ -1,0 +1,483 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="shortcut icon" href="../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-5.1.6">
+    
+    
+      
+        <title>Lineales - estructuras de datos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.dce57e4d.min.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/palette.c929de0b.min.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#3f51b5">
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="../#lineales" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href=".." title="estructuras de datos" class="md-header-nav__button md-logo" aria-label="estructuras de datos">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89"><path d="M3.136 17.387v42.932l42.932 21.467L3.136 17.387z"/><path d="M21.91 8l42.933 64.398-18.775 9.388L3.136 17.387 21.91 8z" fill-opacity=".5"/><path d="M67.535 17.387L40.273 35.543l21.878 32.818 5.384 2.691V17.387z"/><path d="M67.535 17.387v53.666l18.774-9.388V8l-18.774 9.387z" fill-opacity=".25"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            estructuras de datos
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Lineales
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+          
+
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href=".." class="md-tabs__link md-tabs__link--active">
+        Introducción
+      </a>
+    
+  </li>
+
+      
+        
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="estructuras de datos" class="md-nav__button md-logo" aria-label="estructuras de datos">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89"><path d="M3.136 17.387v42.932l42.932 21.467L3.136 17.387z"/><path d="M21.91 8l42.933 64.398-18.775 9.388L3.136 17.387 21.91 8z" fill-opacity=".5"/><path d="M67.535 17.387L40.273 35.543l21.878 32.818 5.384 2.691V17.387z"/><path d="M67.535 17.387v53.666l18.774-9.388V8l-18.774 9.387z" fill-opacity=".25"/></svg>
+
+    </a>
+    estructuras de datos
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Introducción" class="md-nav__link">
+      Introducción
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Lineales
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="./" title="Lineales" class="md-nav__link md-nav__link--active">
+      Lineales
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pila" class="md-nav__link">
+    Pila
+  </a>
+  
+    <nav class="md-nav" aria-label="Pila">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#operaciones-del-tda-pila" class="md-nav__link">
+    Operaciones del TDA Pila
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementacion" class="md-nav__link">
+    Implementacion
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementacion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#estatica" class="md-nav__link">
+    Estatica
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pila" class="md-nav__link">
+    Pila
+  </a>
+  
+    <nav class="md-nav" aria-label="Pila">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#operaciones-del-tda-pila" class="md-nav__link">
+    Operaciones del TDA Pila
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementacion" class="md-nav__link">
+    Implementacion
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementacion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#estatica" class="md-nav__link">
+    Estatica
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                <h1 id="lineales">Lineales</h1>
+<p>Estas estructuras son las principales y las más intuitivas a la hora de representar y almacenar información. Almacenan datos de forma lineal, esto es uno después que la otro. por lo que se forman una fila de información. en estas estructuras hay algunas diferencias en cuanto a cómo se recupera dicha información y de cómo se almacena.</p>
+<div class="toc">
+<ul>
+<li><a href="#lineales">Lineales</a><ul>
+<li><a href="#pila">Pila</a><ul>
+<li><a href="#operaciones-del-tda-pila">Operaciones del TDA Pila</a></li>
+<li><a href="#implementacion">Implementacion</a><ul>
+<li><a href="#estatica">Estatica</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="pila">Pila</h2>
+<p>Esta estructura es una de tipo LIFO (Last In, First Out). el último elemento es el primero en salir como en las torres de hanoi o una pila de platos. Por lo que tendremos que representar este tipo de control para solo poder sacar el primer elemento.</p>
+<p><img alt="" src="../media/lineales/pilas/Pantallazo-2020-05-11 13-07-04.png" /></p>
+<p>Como podemos ver en la figura 2.1 tenemos una variable tope que apunta al último elemento almacenado. tendremos dos operaciones principales <em>apilar</em> y <em>desapilar</em> . donde apilar coloca un nuevo elemento en el tope, y desapilar saca el elemento del tope y asigna este al que está inmediatamente por debajo.</p>
+<p><img alt="" src="../media/lineales/pilas/Pantallazo-2020-05-11 13-09-22.png" /></p>
+<p>Las pilas son utilizadas para solucionar una amplia variedad de problemas en compiladores, sistemas operativos y otros programas en general. Un ejemplo de este tipo de software son los navegadores de Internet: Los browsers usan una pila para almacenar las direcciones de los sitios recientemente visitados y así implementar la funcionalidad "volver atrás" (backspace). También los editores de texto, que proporcionan normalmente un botón deshacer que cancela las operaciones de edición recientes en el orden inverso al que fueron hechas. Otro uso común es la pila de recursividad, en donde en cada llamado recursivo se apilan los valores de los parámetros y variables de ese llamado. En general, utilizaremos pilas cada vez que necesitemos recuperar los elementos en el orden inverso al que han sido agregados.</p>
+<h3 id="operaciones-del-tda-pila">Operaciones del TDA Pila</h3>
+<ul>
+<li>constructor vacío</li>
+</ul>
+<p>// Crea y devuelve la pila vacía. </p>
+<ul>
+<li>apilar (nuevoElem):boolean </li>
+</ul>
+<p>// Pone el elemento nuevoElem en el tope de la pila. Devuelve verdadero si el elemento se pudo apilar y falso en caso contrario. </p>
+<ul>
+<li>desapilar():boolean </li>
+</ul>
+<p>// Saca el elemento del tope de la pila. Devuelve verdadero si la pila no estaba vacía al momento de desapilar (es decir que se pudo desapilar) y falso en caso contrario. </p>
+<ul>
+<li>obtenerTope() : elem </li>
+</ul>
+<p>// Devuelve el elemento en el tope de la pila. Precondición: la pila no está vacía. </p>
+<ul>
+<li>esVacia() : boolean</li>
+</ul>
+<p>// Devuelve verdadero si la pila no tiene elementos y falso en caso contrario. </p>
+<ul>
+<li>vaciar() : void </li>
+</ul>
+<p>// Saca todos los elementos de la pila. </p>
+<ul>
+<li>clone() : Pila </li>
+</ul>
+<p>// Devuelve una copia exacta de los datos en la estructura original, y respetando el orden de los mismos, en otra estructura del mismo tipo </p>
+<ul>
+<li>toString() : String</li>
+</ul>
+<p>// Devuelve una cadena de caracteres formada por todos los elementos de la pila para poder mostrarla por pantalla. Es recomendable utilizar este método únicamente en la etapa de prueba y luego comentar el código.</p>
+<h3 id="implementacion">Implementacion</h3>
+<p>veremos cómo implementar esta estructura de manera estática y de manera dinámica, en la primera almacenamos espacio de memoria por lo cual solo podremos opinar de forma finita, en la segunda la memoria es almacenada de forma dinámica, por lo que podremos opinar de forma indefinida.</p>
+<h4 id="estatica">Estatica</h4>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href=".." title="Introducción" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Introducción
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.39a969d5.min.js"></script>
+      <script src="../assets/javascripts/bundle.8566d47a.min.js"></script><script id="__lang" type="application/json">{"search.config.lang": "en", "clipboard.copy": "Copy to clipboard", "search.result.none": "No matching documents", "search.result.other": "# matching documents", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.config.pipeline": "trimmer, stopWordFilter", "clipboard.copied": "Copied to clipboard", "search.result.one": "1 matching document"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: ["tabs"],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.37585f48.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
