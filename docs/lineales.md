@@ -2,7 +2,7 @@
 
 Estas estructuras son las principales y las más intuitivas a la hora de representar y almacenar información. Almacenan datos de forma lineal, esto es uno después que la otro. por lo que se forman una fila de información. en estas estructuras hay algunas diferencias en cuanto a cómo se recupera dicha información y de cómo se almacena.
 
-[TOC]
+
 
 ## Pila
 
