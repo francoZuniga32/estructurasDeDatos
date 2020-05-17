@@ -1,6 +1,13 @@
-
+/**
+ * @pan32 Franco Agustin Ojeda Zuñiga
+ * 2020 Estrcutura de datos
+ * TDA Pila modelo estatico: estructura de datos tipo LIFO
+ * (Last In First Out), donde el ultimo elemento es el primero
+ * en salir.
+ * se decribe el funcionamiento del mismo a continucacion
+ */
 package lineales.estaticas;
-// @author franco
+
 public class Pila {
     private final static int TAMANIO = 10;
     private Object[] array;

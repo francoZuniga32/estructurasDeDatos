@@ -1,6 +1,13 @@
+/**
+ * @pan32 Franco Agustin Ojeda Zuñiga
+ * 2020 Estrcutura de datos
+ * TDA Pila modelo diamico: estructura de datos tipo LIFO
+ * (Last In First Out), donde el ultimo elemento es el primero
+ * en salir.
+ * se decribe el funcionamiento del mismo a continucacion
+ */
 package lineales.dinamicas;
 
-//@author franco
 public class Pila {
     private Nodo tope;
     

@@ -1,10 +1,12 @@
+/**
+ * @pan32 Franco Agustin Ojeda Zuñiga
+ * 2020, Estructuras de Datos
+ * TDA Lista: estrcutura de datos que almacena elementos 
+ * como un arreglo dinamico, pero la forma de hacerlo 
+ * es enlazando nodos.
+ */
 package lineales.dinamicas;
 
-/**
- * @author franco
- * las operaciones que se realizan a continuacion tienen en cuanta el uso del recolector de basura de java
- * por lo que muchas de las operaciones implican el desreferenciar objetos.
- */
 public class Lista{
     private Nodo cabecera;
     private int longitud;
@@ -19,8 +21,8 @@ public class Lista{
     
     /**
      * Insertamos un elemento en la posicion especificada
-     * @param elemento
-     * @param posicion
+     * @param elemento el elemento a almacenar
+     * @param posicion la pocision donde lo queremos insertar en la lista
      * @return booleano true(si se puedo insertar) false (si la pocicion no es valida)
      */
     public boolean insertar(Object elemento, int posicion){
@@ -53,8 +55,9 @@ public class Lista{
     
     /**
      * Eliminamos un elemento de la pocicion indicada
-     * @param posicion
-     * @return 
+     * @param posicion es el lugar en la lista que queremos eliminar en la lista
+     * @return true si puedo eliminar
+     *         false si la pocicion no es valida
      */
     public boolean eliminar(int posicion){
         boolean retorno = false;
@@ -86,7 +89,7 @@ public class Lista{
     
     /**
      * Recuperamos el elemento en la pocicion indicada
-     * @param posicion
+     * @param posicion la posicion del elemento a recuperar
      * @return 
      */
     public Object recuperar(int posicion){
@@ -110,8 +113,8 @@ public class Lista{
     
     /**
      * Localizamos un elemento en la lista
-     * @param elemento
-     * @return 
+     * @param elemento es el elemento a buscar
+     * @return la posicion donde se encuentra el elemento -1 si no lo encontro
      */
     public int localizar(Object elemento){
         int retorno = -1;
@@ -137,7 +140,7 @@ public class Lista{
     
     /**
      * Retornamos la longitud de la lista
-     * @return 
+     * @return longitud de la lista
      */
     public int longitud(){
         return this.longitud;
@@ -145,7 +148,8 @@ public class Lista{
     
     /**
      * Evaluamos o consultamos si la lista esta vacia
-     * @return 
+     * @return true si esta vacia
+     *         false en caso contrario
      */
     public boolean esVacia(){
         boolean retorno = false;
@@ -164,7 +168,7 @@ public class Lista{
     
     /***
      * es el algoritmo sonde creamos un clon invertido
-     * @return 
+     * @return una lista con los enlaces invertidos
      */
     public Lista invertir(){
         Lista invertido = new Lista();
@@ -177,7 +181,7 @@ public class Lista{
      * es el paso recursivo para poder realizar la lista invertida
      * @param punteroOriginal es el puntero de los nodos de la lisa original
      * @param listaClone, es la lista clon que usamos para poder crear la cabecera
-     * @return 
+     * @return nodo para el enlace inverso recursivo
      */
     private Nodo invertirPaso(Nodo punteroOriginal,Lista listaClone){
         Nodo retorno;
@@ -200,8 +204,9 @@ public class Lista{
     
     /***
      * eliminamos las apariciones de un elemento en la lista
-     * @param elemento
-     * @return 
+     * @param elemento el que queremos eliminar de la lista
+     * @return true si pudo eliminar las apariciones
+     *         false si no encontro dicho elemento
      */
     public boolean eliminarApariciones(Object elemento){
         //vamos a recorrer los nodos buscando
@@ -250,19 +255,22 @@ public class Lista{
         return clon;
     }
     
-    /**
+    /***
      * Paso recursivo que clona la lista, donde pasamos el clon
      * nos movemos por el enlace de la cabecera original, vamos clonando los elementos del enlace 
      * y cermaos un nodo y vamos enlazando.
-     * @param clon
-     * @param aux
+     * @param aux nodo
      * @param puntero 
      */
     private void clonePasoRecursivo(Nodo aux, Nodo puntero){
+        //mientras el nodo de la lista actual no apunte a null
         if(aux.getEnlace() != null){
+            //obtenemos el enlace de este nodo
             aux = aux.getEnlace();
+            //cremos un nuevo nodo clon el cual vamos a enlazar con puntero
             Nodo nuevo = new Nodo(aux.getElemento(), null);
             puntero.setEnlace(nuevo);
+            //hacemos que puntero cambie a su enlace
             puntero = nuevo;
             clonePasoRecursivo(aux, puntero);
         }
@@ -270,7 +278,7 @@ public class Lista{
     
     /**
      * retornamos una cadena de caracteres, con la lista representada.
-     * @return 
+     * @return String que representa la lista
      */
     public String toString(){
         String retorno = "Lista Vacia";

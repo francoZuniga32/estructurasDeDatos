@@ -1,8 +1,12 @@
+/**
+ * @pan32 Franco Agustin Ojeda Zuñiga
+ * 2020, Estructuras de Datos
+ * TDA Cola version dinamica: estrcutura de datos tipo FIFO
+ * (Fist In First Out) donde el primero en entrar es el primero
+ * en salir denomindo frente de la cola
+ */
 package lineales.dinamicas;
 
-/**
- * @author franco
- */
 public class Cola {
    private Nodo frente;
    private Nodo fin;

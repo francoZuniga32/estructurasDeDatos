@@ -1,14 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @pan32 Franco Agustin Ojeda Zuñiga
+ * 2020, Estructuras de Datos
+ * TDA Arbol binario: estrucutura de datos que almacena elementos 
+ * en un nodo, almacena dos enlaces a sus dos siguientes hijos 
+ * derecho e izquierdo. si no tiene hijo se los denomina null
  */
 package jerarquicas.dinamico;
 import lineales.dinamicas.*;
-/**
- *
- * @author franco
- */
+
 public class ArbolBin {
     private NodoArbol raiz;
     
@@ -22,10 +21,12 @@ public class ArbolBin {
     /***
      * vamos insertar el elemento en el arbol, indicando el padre y la pocicion Izquierdo o Derecho
      * retorna falso, si no encontro el padre o si la pocicion del padre encontrado esta ocupada
-     * @param elementoNuevo
-     * @param elementoPadre
-     * @param posicion
-     * @return boolean
+     * @param elementoNuevo es el elemento a insetar el nuevo nodo a crear
+     * @param elementoPadre es al padre nodo que almacenara el elemento
+     * @param posicion es la pocicion 'I' o 'D' para decidir donde insertarlo
+     * @return boolean si logro insertar el elemento, retorna false si:
+     *         el padre no existe, o si la pocicion ya esta ocupada
+     *         caso contrario retorna true
      */
     public boolean insertar(Object elementoNuevo, Object elementoPadre, char posicion){
         /***
@@ -52,11 +53,11 @@ public class ArbolBin {
      * si lo encuantra intenta insetar en I o D, si no pude retorna falso
      * si puede retorna true
      * si no encuntra la padre retorna false
-     * @param raiz
-     * @param nuevoElemento
-     * @param elementoPadre
-     * @param posicion
-     * @return boolean
+     * @param raiz es el nodo del subarbol
+     * @param nuevoElemento el nuevo elemeneto a querer insertar
+     * @param elementoPadre el elemento que almacena le padre para poder bucarlo
+     * @param posicion cual de las pocisiones hay que insertarlo 'I' o 'D'
+     * @return boolean si logra insertarlo, funciona para cortar la busqueda del padre
      */
     private boolean auxInsertarPreorden(NodoArbol raiz, Object nuevoElemento, Object elementoPadre, char posicion){
         /***
@@ -94,6 +95,12 @@ public class ArbolBin {
         return retorno;
     }
     
+    /***
+     * !!evaluar si es usado por algun metodo en particular para poder evitar 
+     * tenerlo y en caso de no necesitarlo sacarlo
+     * @param elemento
+     * @return 
+     */
     private Object obtenerNodo(Object elemento){
         //vamos a buscar por preorden el nodo arbol del arbol
         Object retorno = null;
@@ -136,18 +143,17 @@ public class ArbolBin {
     }
     
     /***
-     * este es el metodo para dar el padre de un elemento
-     * en caso de ser un arbol vacio retorna mensaje de "arbol vacio"
-     * en el caso de que el elemento de sea la raiz devulve un mensaje de "elemento padre"
-     * en el caso de que no se busca por el metodo auxliar
+     * este es el metodo para dar el padre de un elemento,
+     * en caso de ser un arbol vacio retorna un null
+     * en el caso de que el elemento de sea la raiz devulve un null
+     * en el caso de que no, se busca por el metodo auxliar
      * @param elemento
      * @return Object
      */
     public Object padre(Object elemento){
-        Object retorno = "ArbolVacio";
+        Object retorno = null;
         
         if(!this.esVacio()){
-            retorno = "El elemento es raiz";
             if(!this.raiz.getElemento().equals(elemento)){
                 retorno = padreRecursivo(this.raiz, elemento);
             }
@@ -159,9 +165,9 @@ public class ArbolBin {
     /***
      * es el metodo auxiliar para encontrar el elemento
      * donde los vamos a buscar por preorden
-     * @param raiz
-     * @param elemento
-     * @return Object
+     * @param raiz que es el padre del subarbol
+     * @param elemento el elemento a localizar como hijo de raiz
+     * @return Object que sera raiz en caso de ser el padre de elemento
      */
     private Object padreRecursivo(NodoArbol raiz, Object elemento){
         //el valor de retorno que esta seteado en null
@@ -193,63 +199,9 @@ public class ArbolBin {
         return retorno;
     }
     
-    public Object padreDante(Object hijo) {
-        return busPadre(this.raiz, hijo, this.raiz.getElemento());
-    }
-
-    private Object busPadre(NodoArbol aux, Object hijo, Object padre) {
-        Object r = null;
-        if (aux != null) {
-            if(aux.getElemento().equals(hijo)) {
-                r = padre;
-            }else{
-                r = busPadre(aux.getIzquierdo(), hijo, aux.getElemento());
-                if (r == null) {
-                    r = busPadre(aux.getDerecho(), hijo, aux.getElemento());
-                }
-            }
-        }
-        return r;
-    }
-    
-    public Object padreNivel(Object elemento){
-        Object retorno = "Arbol Vacio";
-        if(this.raiz != null){
-            retorno = "es el padre";
-            if(this.raiz.getElemento().equals(elemento)){
-                //usamos una cola para poder recorrer los niveles
-                Cola cola = new Cola();
-                //ponemos el nodo raiz en la cola
-                cola.poner(this.raiz);
-                //variable de control para parar el algiritmo
-                boolean control = true;
-
-                //recorremos mientras la cola no este vacia
-                while(!cola.esVacia() && control){
-                    //obtenemos el tope de la cola
-                    NodoArbol aux = (NodoArbol) cola.obtenerFrente();
-                    System.out.print(aux.getElemento().toString()+",");
-                    cola.sacar();
-
-                    //si el hijo izquierdo no es vacio lo ponemos en la cola
-                    if(aux.getIzquierdo() != null){
-                        cola.poner(aux.getIzquierdo());
-                    }
-                    //si el hijo derecho no es vacio lo ponemos en la cola
-                    if(aux.getDerecho() != null){
-                        cola.poner(aux.getDerecho());
-                    }
-                }     
-            }
-        } 
-        
-        return retorno;
-    }
-    
-    
     /***
      * obtenemos la altura del arbol
-     * @return int
+     * @return int es la altura del arbol completo
      */
     public int altura(){
         int retorno = 0;
@@ -263,8 +215,8 @@ public class ArbolBin {
     
     /***
      * metodo de obtencion de altura usando el recorrido en preorden
-     * @param raiz
-     * @return int
+     * @param raiz el el nodo del subarbol
+     * @return int es la altura del subarbol
      */
     private int auxAltura(NodoArbol raiz){
         //vamos a evaluar si la raiz no es null
@@ -289,7 +241,9 @@ public class ArbolBin {
     /***
      * dado un elemento devolvemos el nivel en el cual se encuentra
      * -1 si no esta o el arbol esta vacio
-     * 0 si es raiz, y asi
+     * 0 si es raiz, y asi se suman segun donde se encuentre de la raiz
+     * podemos decir que es la cantidad de nodos de distancia desde la raiz asta
+     * el elemento
      * @param elemento
      * @return int
      */
@@ -343,7 +297,10 @@ public class ArbolBin {
         this.raiz = null;
     }
     
-    
+    /***
+     * clonamos la estructura del arbol
+     * @return un ArbolBin con la estructura del arbol actual
+     */
     public ArbolBin clone(){
         ArbolBin clon = new ArbolBin();
         if(this.raiz != null){
@@ -354,7 +311,12 @@ public class ArbolBin {
         return clon;
     }
     
-    public void auxClone(NodoArbol raizOriginal, NodoArbol raizClone){
+    /***
+     * es el metodo de clonacion auxiliar 
+     * @param raizOriginal es el nodo de la subraiz
+     * @param raizClone  es el nodo clonado de la subraiz
+     */
+    private void auxClone(NodoArbol raizOriginal, NodoArbol raizClone){
         //vamos a evalur si tenemos el HI en el nodo original
         if(raizOriginal.getIzquierdo() != null){
             //creamos un nodo arbol con los elementos de este HI
@@ -374,79 +336,93 @@ public class ArbolBin {
     //recorridos de arboles
     
     /***
-     * listamos el arbol en preodren (raiz, arbolIzq, arbolDer)
+     * retornamos una lista de los elementos del arbol en preorden
+     * @return Lista cuyos elementos se encuntran ordenados en preorden
      */
-    public void preorden(){
-        //invocamos el metodo auxliar para poder recorrerlos
-        auxpreorden(this.raiz);
+    public Lista preorden(){
+        Lista preorden = new Lista();
+        if(this.raiz != null){
+            auxpreorden(this.raiz, preorden);
+        }
+        return preorden;
     }
     
     /***
-     * metodo auxliliar para el recorrido en preorden
-     * @param raiz 
+     * metodo auxiliar para el insetado en la lista de los elementos del arbol
+     * en preorden
+     * @param raiz es la subraiz del subarbol
+     * @param preorden es la lista donde se va a insertar
      */
-    private void auxpreorden(NodoArbol raiz){
+    private void auxpreorden(NodoArbol raiz, Lista preorden){
         if(raiz != null){
-            System.out.print(raiz.getElemento().toString()+",");
+            preorden.insertar(raiz.getElemento(), preorden.longitud() + 1);
             
-            auxpreorden(raiz.getIzquierdo());
-            auxpreorden(raiz.getDerecho());
+            auxpreorden(raiz.getIzquierdo(), preorden);
+            auxpreorden(raiz.getDerecho(), preorden);
         }
     }
     
     /***
      * recorremos el arbol por inorden
      */
-    public void inorden(){
-        //invocamos el metodo auxliar para poder recorrerlos
-        auxInorden(this.raiz);
+    public Lista inorden(){
+        Lista inorden = new Lista();
+        if(this.raiz != null){
+            auxInorden(this.raiz, inorden);   
+        }
+        return inorden;
     }
     
     /***
-     * metodo auxliliar para recorrer el arbol por inorden
-     * @param raiz 
+     * metodo auxiliar para insertar los elementos del arbol el inorden
+     * @param raiz es la raiz del subarbol
+     * @param inorden es ka lista que se usa para insertar
      */
-    private void auxInorden(NodoArbol raiz){
+    private void auxInorden(NodoArbol raiz, Lista inorden){
         if(raiz != null){
-            auxInorden(raiz.getIzquierdo());
-            System.out.print(raiz.getElemento().toString()+",");
-            auxInorden(raiz.getDerecho());
+            auxInorden(raiz.getIzquierdo(), inorden);
+            inorden.insertar(raiz.getElemento(), inorden.longitud() +1);
+            auxInorden(raiz.getDerecho(), inorden);
         }
     }
     
     /***
      * recorremos el arbol por posorden
      */
-    public void posorden(){
-        //invocamos el metodo auxliar para poder recorrerlos
-        auxPosOrden(this.raiz);
+    public Lista posorden(){
+        Lista posorden = new Lista();
+        if(this.raiz != null){
+            auxPosOrden(this.raiz, posorden);
+        }
+        return posorden;
     }
     
     /***
      * metodo auxliliar para recorrer el arbol por posorden
      * @param raiz 
      */
-    private void auxPosOrden(NodoArbol raiz){
+    private void auxPosOrden(NodoArbol raiz, Lista posorden){
         if(raiz != null){
-            auxPosOrden(raiz.getIzquierdo());
-            auxPosOrden(raiz.getDerecho());
-            System.out.print(raiz.getElemento().toString()+",");
+            auxPosOrden(raiz.getIzquierdo(), posorden);
+            auxPosOrden(raiz.getDerecho(), posorden);
+            posorden.insertar(raiz.getElemento(), posorden.longitud() +1);
         }
     }
     
     /***
      * recorremos el arbol por niveles
      */
-    public void porNivel(){
+    public Lista porNivel(){
         //usamos una cola para poder recorrer los niveles
         Cola cola = new Cola();
+        Lista nivel = new Lista();
         //ponemos el nodo raiz en la cola
         cola.poner(this.raiz);
         //recorremos mientras la cola no este vacia
         while(!cola.esVacia()){
             //obtenemos el tope de la cola
             NodoArbol aux = (NodoArbol) cola.obtenerFrente();
-            System.out.print(aux.getElemento().toString()+",");
+            nivel.insertar(aux.getElemento(), nivel.longitud() +1);
             cola.sacar();
             
             //si el hijo izquierdo no es vacio lo ponemos en la cola
@@ -468,13 +444,7 @@ public class ArbolBin {
      * si no tiene HI o HD le ponemos un -
      * si el arbol esta vacio devolvemos un error de arbol vacio
      * recorremos el arbol en preorden
-     * @return String
-     */
-    
-    //especiales de la estructura
-    /***
-     * 
-     * @return 
+     * @return String que reoresenta la estructura del arbol
      */
     public String toString(){
         //retornamos un string 
@@ -489,17 +459,18 @@ public class ArbolBin {
     
     /***
      * metodo recursivo auxiliar para poder armar el string del arbol 
-     * @param raiz
-     * @return String
+     * @param raiz es la subraiz del subarbol
+     * @return String es el string de retorno de la estructura del subarbol
      */
     private String auxToString(NodoArbol raiz){
         String retorno = "";
         if(raiz != null){
             retorno = raiz.getElemento().toString()+":";
             
+            //obtenemos los hijos de este sub arbol
             NodoArbol izquierdo = raiz.getIzquierdo();
             NodoArbol derecho = raiz.getDerecho();
-            
+            //concatenamos lo que contengan esos hijos
             if( izquierdo != null){
                 retorno = retorno + " HI:"+izquierdo.getElemento().toString();
             }else{
@@ -511,9 +482,9 @@ public class ArbolBin {
             }else{
                 retorno = retorno + " HD:-";
             }
-            
+            //creamos el salto de linea para darle formato
             retorno = retorno + "\n";
-            
+            //y relizamos algun recorrido de arbol
             if(izquierdo != null){
                 retorno = retorno + auxToString(izquierdo);
             }
@@ -522,12 +493,25 @@ public class ArbolBin {
                 retorno = retorno + auxToString(derecho);
             }
         }
+        //retornamos dicho string generado
         return retorno;
     }
     
+    //metodos especiales propuestos por la catedra de Estructuras de Datos
+    
+    /***
+     * dado un lista con un padtron o comino desde la raiz asta un subarbol
+     * recorremos con alguna condicion de corte para poder evaluar si dicho 
+     * patron se encuantra en el arbol
+     * @param listaPatron es la lista del patro o camino
+     * @return true si dicho patron se encuantra en el arbol, 
+     *         false en caso contrario 
+     */
     public boolean vericarPatron(Lista listaPatron){
         boolean retorno = false;
+        //evaluamos que la lista no esta vacia
         if(listaPatron.esVacia()){
+            //en caso de que la lista no lo este y el arbol no este vacio
             if(this.raiz == null){
                 retorno = true;
             }

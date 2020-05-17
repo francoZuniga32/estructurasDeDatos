@@ -14,15 +14,16 @@ public class ABBtest {
         //probamos los metodos de insercion
         System.out.println("metodos de insercion:");
         System.out.println("Arbol A1 letras:");
-        System.out.println("Insertamos F espera OK!:\t\t\t"+(A1.insertar('F')? sOk: sErr));
-        System.out.println("Insertamos C espera OK!:\t\t\t"+(A1.insertar('C')? sOk: sErr));
         System.out.println("Insertamos G espera OK!:\t\t\t"+(A1.insertar('G')? sOk: sErr));
+        System.out.println("Insertamos C espera OK!:\t\t\t"+(A1.insertar('C')? sOk: sErr));
         System.out.println("Insertamos I espera OK!:\t\t\t"+(A1.insertar('I')? sOk: sErr));
+        System.out.println("Insertamos A espera OK!:\t\t\t"+(A1.insertar('A')? sOk: sErr));
+        System.out.println("Insertamos D espera OK!:\t\t\t"+(A1.insertar('D')? sOk: sErr));
         System.out.println("Insertamos H espera OK!:\t\t\t"+(A1.insertar('H')? sOk: sErr));
         System.out.println("Insertamos J espera OK!:\t\t\t"+(A1.insertar('J')? sOk: sErr));
         System.out.println("Insertamos B espera OK!:\t\t\t"+(A1.insertar('B')? sOk: sErr));
-        System.out.println("Insertamos A espera OK!:\t\t\t"+(A1.insertar('A')? sOk: sErr));
-        System.out.println("Insertamos D espera OK!:\t\t\t"+(A1.insertar('D')? sOk: sErr));
+        System.out.println("Insertamos F espera OK!:\t\t\t"+(A1.insertar('F')? sOk: sErr));
+        System.out.println("Insertamos K espera OK!:\t\t\t"+(A1.insertar('K')? sOk: sErr));
         System.out.println("Insertamos F espera ERROR:\t\t\t"+(A1.insertar('F')? sOk: sErr));
         System.out.println("Insertamos B espera ERROR!:\t\t\t"+(A1.insertar('B')? sOk: sErr));
         System.out.println("Insertamos J espera ERROR!:\t\t\t"+(A1.insertar('J')? sOk: sErr));
@@ -57,6 +58,14 @@ public class ABBtest {
         System.out.println("Listado entre F y B espera lista Vacia:\t\t"+A1.listarRango('F', 'B').toString());
         
         System.out.println("--------------------------------------");
-        System.out.println("");
+        System.out.println("eliminamos");
+        System.out.println("Eliminamos B espera OK!: \t\t"+(A1.eliminar('B')? sOk: sErr));
+        System.out.println(A1.lista());
+        System.out.println("Eliminamos C espera OK!: \t\t"+(A1.eliminar('C')? sOk: sErr));
+        System.out.println(A1.lista());
+        System.out.println("Eliminamos J espera OK!: \t\t"+(A1.eliminar('J')? sOk: sErr));
+        System.out.println(A1.lista());
+        System.out.println("Eliminamos G espera OK!: \t\t"+(A1.eliminar('G')? sOk: sErr));
+        System.out.println(A1.lista());
     }
 }
