@@ -1,8 +1,13 @@
+/**
+ * @pan32 Franco Agustin Ojeda Zuñiga
+ * 2020, Estructuras de Datos
+ * TDA Arbol generico: estrucutura de datos que almacena elementos 
+ * que pueden tener mas de dos hijos no como el binario
+ * mas informacion: https://es.wikipedia.org/wiki/%C3%81rbol_(inform%C3%A1tica)
+ */
 package jerarquicas.dinamico;
 import lineales.dinamicas.*;
-/**
- * @author franco
- */
+
 public class ArbolGen {
     public NodoGen raiz;
     

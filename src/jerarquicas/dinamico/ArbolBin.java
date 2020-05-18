@@ -1,9 +1,10 @@
 /**
  * @pan32 Franco Agustin Ojeda Zuñiga
  * 2020, Estructuras de Datos
- * TDA Arbol binario: estrucutura de datos que almacena elementos 
- * en un nodo, almacena dos enlaces a sus dos siguientes hijos 
- * derecho e izquierdo. si no tiene hijo se los denomina null
+ * TDA Arbol binario: estrucutura de datos que en la cual cada elemento 
+ * puede tener un hijo izquierdo y un hijo derecho. 
+ * No pueden tener más de dos hijos de hay binario 
+ * mas informaicion: https://es.wikipedia.org/wiki/%C3%81rbol_binario
  */
 package jerarquicas.dinamico;
 import lineales.dinamicas.*;
@@ -434,6 +435,7 @@ public class ArbolBin {
                 cola.poner(aux.getDerecho());
             }
         }
+        return nivel;
     }
     
     
@@ -511,11 +513,12 @@ public class ArbolBin {
         boolean retorno = false;
         //evaluamos que la lista no esta vacia
         if(listaPatron.esVacia()){
-            //en caso de que la lista no lo este y el arbol no este vacio
+            //en caso de que la lista este vacia y el arbol este vacio
             if(this.raiz == null){
                 retorno = true;
             }
         }else{
+            //en caso de no estar la lista vacia y que el arbol no lo este
             if(this.raiz != null){
                 retorno = verificarPatronAux(this.raiz, listaPatron);
             }
@@ -524,6 +527,12 @@ public class ArbolBin {
         return retorno;
     }
     
+    /***
+     * metodo auxliar para evaluar si un patros esta en el arbol
+     * @param raiz es la subraiz del subarbol
+     * @param listaPatron es la lista del patron o camino
+     * @return true si el patron coincide, false en caso contrario
+     */
     private boolean verificarPatronAux(NodoArbol raiz, Lista listaPatron){
         //verificamos si el elemento en el frente de la lista es igual a la raiz
         boolean retorno = false;
@@ -539,7 +548,7 @@ public class ArbolBin {
                      retornoIzquierdo = verificarPatronAux(raiz.getIzquierdo(), listaPatron);
                      retorno = retornoIzquierdo;
                 }
-                
+                //si no encontro el patron por el HI, lo busca por le HD
                 if(raiz.getDerecho() != null && !retornoIzquierdo){
                     retorno = verificarPatronAux(raiz.getDerecho(), listaPatron);
                 }
@@ -548,6 +557,11 @@ public class ArbolBin {
         return retorno;
     }
     
+    /***
+     * retornamos una lista de los elementos en la frontera del arbol
+     * los que serian hoja del mismo
+     * @return Lista con las hojas del arbol
+     */
     public Lista frontera(){
         Lista retorno = new Lista();
         if(this.raiz != null){
@@ -556,11 +570,19 @@ public class ArbolBin {
         return retorno;
     }
     
+    /***
+     * metodo auxiliar para almacenar las hojas del arbol
+     * @param raiz es la subraiz del subarbol
+     * @param lista es la Lista de hojas
+     */
     private void fronteraAux(NodoArbol raiz, Lista lista){
+        //si el nodo no es null
         if(raiz != null){
+            //evaluamos si no tenemos HI y si no tenemos HD en caso insertamos
             if(raiz.getIzquierdo() == null && raiz.getDerecho() == null){
                 lista.insertar(raiz.getElemento(), 1);
             }else{
+                //caos contrario buscamos en los subarboles
                 if(raiz.getIzquierdo() != null){
                     fronteraAux(raiz.getIzquierdo(), lista);
                 }
