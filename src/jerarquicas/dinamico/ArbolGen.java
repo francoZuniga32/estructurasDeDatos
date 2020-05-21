@@ -21,9 +21,10 @@ public class ArbolGen {
     /***
      * insertamos un elemento en el arbol especificando el padre
      * devuelve true si lo logro, y si no existe el padre retorna false
-     * @param elemento
-     * @param padre
-     * @return boolean
+     * @param elemento es el elemento a almacenar en el nodo
+     * @param padre es el padre al cual le vamos a asignar dicho elemento como hijo
+     * @return false si el padre no existe
+     *         true en caso contrario
      */
     public boolean insertar(Object elemento, Object padre){
         //vamos a evaluar si el arbol no esta vacio
@@ -41,10 +42,11 @@ public class ArbolGen {
     
     /***
      * es el paso recursivo para poder insertar un elemento en el arbol
-     * @param elemento
-     * @param padre
-     * @param raiz
-     * @return boolean
+     * @param elemento es el elemento a insertar
+     * @param padre es el padre al cual le vamos a asignar dicho elemento
+     * @param raiz es el nodo raiz del subarbol actual
+     * @return false en caso de que no encuntre el padre (llege a un hoja)
+     *         
      */
     private boolean insertarPaso(Object elemento, Object padre, NodoGen raiz){
         //vamos a comparar el padre con la raiz
