@@ -344,13 +344,14 @@ public class AVL {
     //rotaciones
     /***
      * Este metodo rota al subarbol hacia de izquierda, esto es para mantener
-     * el balance del arbol cuando esta caido a la derecha
+     * el balance del arbol cuando esta caido a la derecha (balance -2)
      * @param padre es la raiz para la cual el arbol esta caido a la derecha
-     * @param hijoDerecho es el hacia donde esta caido
+     * @param hijoDerecho es el hacia donde esta caido el arbol, esta tambien
+     *                    esta un poco caido hacia la derecha (balance -1)
      * @return la nueva subraiz que sera el subarbol balanceado
      */
     private NodoBB simpleIzquierda(NodoBB padre, NodoBB hijoDerecho){
-        //guardamos el hijo derecho de hijoDerecho en una variable temporal
+        //guardamos el hijo izquierdo de hijoDerecho en una variable temporal
         NodoBB temp = hijoDerecho.getIzquierdo();
         //padre pasa a ser hijo de hijo derecho
         hijoDerecho.setIzquierdo(padre);
@@ -358,6 +359,29 @@ public class AVL {
         padre.setDerecho(temp);
         return hijoDerecho;
     }
+    
+    /***
+     * Este metodo retorna rota el subarbol hacia la derecha, esto para mantener 
+     * el balance del arbol, esto se aplica cuando el arbol esta caido hacia 
+     * la izquierda (balance 2) 
+     * @param padre es la raiz del subarbol a rotar
+     * @param hijoIzquierdo es el hijo hacia donde esta caido el subarbol que 
+     *                      tambien esta un poco caido hacia la izquierda 
+     *                      (balance 1)
+     * @return el nuevo sobarbol balanceado
+     */
+    private NodoBB simpleDerecha(NodoBB padre, NodoBB hijoIzquierdo){
+        //guardamos el hijo derecho de hijoIzquierdo en un tmp
+        NodoBB temp = hijoIzquierdo.getDerecho();
+        //hacemos que hijoIzquierdo tenga como derecho a su padre
+        hijoIzquierdo.setDerecho(padre);
+        //hacemos que tmp sea hijo izquierdo de padre
+        padre.setIzquierdo(temp);
+        return hijoIzquierdo;
+    }
+    
+    
+    
     
     /***
      * evaluamos si un elemento esta en el arbol
