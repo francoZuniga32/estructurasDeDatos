@@ -8,7 +8,7 @@ package conjuntitas.dinamico;
 import lineales.dinamicas.*;
 
 public class AVL {
-    private NodoBB raiz;
+    private NodoAVL raiz;
     
     /***
      * constructor del arbol binario de busqueda
@@ -26,15 +26,14 @@ public class AVL {
     public boolean insertar(Comparable elemento){
         boolean retorno = false;
             
-            if(this.raiz == null){
-                //en caso de no tener raiz la insertamos y retornamos true
-                this.raiz = new NodoBB(elemento, null, null);
-                retorno = true;
-            }else{
-                //en caso de tener raiz hacemos uso de un metodo recursivo
-                retorno = insertarAux(this.raiz, elemento);
-            }
-        
+        if(this.raiz == null){
+            //en caso de no tener raiz la insertamos y retornamos true
+            this.raiz = new NodoAVL(elemento, null, null);
+            retorno = true;
+        }else{
+            //vamos a comparar con la raiz y mandarlo por el hijo que corresponde
+            retorno = insertarAux(raiz, elemento);
+        }
         return retorno;
     }
     
@@ -45,12 +44,10 @@ public class AVL {
      * @param elemento
      * @return 
      */
-    private boolean insertarAux(NodoBB subRaiz, Comparable elemento){
+    private boolean insertarAux(NodoAVL padre, NodoAVL subRaiz, Comparable elemento){
         //comparamos con el elemento actual
-        boolean retorno;
-        if(subRaiz.getElemento().equals(elemento)){
-            retorno = false;
-        }else{
+        boolean retorno = false;
+        if(!subRaiz.getElemento().equals(elemento)){
             //en caso de que no sea igual a la raiz vamos a comprar con la raiz
             //comparamos con la raiz
             if(subRaiz.getElemento().compareTo(elemento) > 0){
@@ -60,7 +57,7 @@ public class AVL {
                     retorno = insertarAux(subRaiz.getIzquierdo(), elemento);
                 }else{
                     //en caso de no tener un hijo izquierdo insertamos
-                    subRaiz.setIzquierdo(new NodoBB(elemento, null, null));
+                    subRaiz.setIzquierdo(new NodoAVL(elemento, null, null));
                     retorno = true;
                 }
             }else{
@@ -70,13 +67,23 @@ public class AVL {
                     retorno = insertarAux(subRaiz.getDerecho(), elemento);
                 }else{
                     //en caso de no tener un hijo izquierdo insertamos
-                    subRaiz.setDerecho(new NodoBB(elemento, null, null));
+                    subRaiz.setDerecho(new NodoAVL(elemento, null, null));
                     retorno = true;
                 }
             }
         }
+        //si insertamos balanceamos el nodo
+        if(retorno){
+            subRaiz.recalcularAltura();
+            //evaluamos el balance de altura llamando al metodo
+            if(!estaBalanceado(subRaiz)){
+                //si no esta balanceado procedemos a balancearlo
+                //intercambiamos el nodo por el actual
+            }
+        }
         return retorno;
     }
+    
     
     /***
      * elimina un elemento del arbol
@@ -110,8 +117,8 @@ public class AVL {
      * @param raiz
      * @return 
      */
-    private NodoBB eliminarRaiz(NodoBB raiz){
-        NodoBB retorno = null;
+    private NodoAVL eliminarRaiz(NodoAVL raiz){
+        NodoAVL retorno = null;
         switch(condicion(raiz)){
             case 0:
                 retorno = metodo1();
@@ -125,6 +132,7 @@ public class AVL {
             default:
                 break;
         }
+        balance(raiz);
         return retorno;
     }
     
@@ -137,10 +145,10 @@ public class AVL {
      * @param hijo
      * @return 
      */
-    private boolean eliminarAux(NodoBB padre, NodoBB subRaiz, Comparable elemento, char hijo){
+    private boolean eliminarAux(NodoAVL padre, NodoAVL subRaiz, Comparable elemento, char hijo){
         boolean retorno = false;
         if(subRaiz.getElemento().equals(elemento)){
-            NodoBB remplazo = null;
+            NodoAVL remplazo = null;
             //evaluamos la condicion de dicho subarbol
             switch(condicion(subRaiz)){
                 case 0:
@@ -174,6 +182,8 @@ public class AVL {
                 retorno = eliminarAux(subRaiz, subRaiz.getDerecho(), elemento, 'D');
             }
         }
+        //balancemos
+        balance(subRaiz);
         return retorno;
     }
     
@@ -183,7 +193,7 @@ public class AVL {
      * @param nodo es el nodo que queremos evaluar
      * @return la cantidad de hijos que pocee o, 1, o 2
      */
-    private int condicion(NodoBB nodo){
+    private int condicion(NodoAVL nodo){
         int retorno = 0;
         //pasamos la raiz y evaluamos cuales de los metodos usar
         if(nodo.getIzquierdo() != null && nodo.getDerecho() != null){
@@ -203,7 +213,7 @@ public class AVL {
      * metodo de eliminacion 1 e cual se aplica cuando no tiene hijos
      * @return null para signar al padre
      */
-    private NodoBB metodo1(){
+    private NodoAVL metodo1(){
         return null;
     }
     
@@ -213,8 +223,8 @@ public class AVL {
      * @param nodo a eliminar
      * @return el hijo del nodo pasado por parametro
      */
-    private NodoBB metodo2(NodoBB nodo){
-        NodoBB retorno = null;
+    private NodoAVL metodo2(NodoAVL nodo){
+        NodoAVL retorno = null;
         if(nodo.getIzquierdo() != null){
             retorno = nodo.getIzquierdo();
         }else{
@@ -230,14 +240,14 @@ public class AVL {
      * @param nodo a eliminar
      * @return el nuevo subarbol con el elemento ya eliminado
      */
-    private NodoBB metodo3(NodoBB nodo){
+    private NodoAVL metodo3(NodoAVL nodo){
         //obtenemos los candidatos de los cuales sacamos a los hijos 
         //el que tenga menor cantidad de hijos es el candidato elegido
-        NodoBB retorno = null;
+        NodoAVL retorno = null;
         boolean complatado = false;
         //obtenemos los candidatos
-        NodoBB candidatoA = candidatoA(nodo.getIzquierdo());
-        NodoBB candidatoB = candidatoB(nodo.getDerecho());
+        NodoAVL candidatoA = candidatoA(nodo.getIzquierdo());
+        NodoAVL candidatoB = candidatoB(nodo.getDerecho());
         //evaluamos cual tiene menos hijos
         int hijosCandidatoA = condicion(candidatoA);
         int hijosCandidatoB = condicion(candidatoB);
@@ -265,8 +275,8 @@ public class AVL {
      * @param raiz del subarbol pasado
      * @return el nodo mas a la derecha
      */
-    private NodoBB candidatoA(NodoBB raiz){
-        NodoBB aux = raiz;
+    private NodoAVL candidatoA(NodoAVL raiz){
+        NodoAVL aux = raiz;
         while(aux.getDerecho() != null){
             aux = aux.getDerecho();
         }
@@ -278,8 +288,8 @@ public class AVL {
      * @param raiz del subarbol pasado
      * @return el nodo mas a la izquierda del subarbol
      */
-    private NodoBB candidatoB(NodoBB raiz){
-        NodoBB aux = raiz;
+    private NodoAVL candidatoB(NodoAVL raiz){
+        NodoAVL aux = raiz;
         while(aux.getIzquierdo() != null){
             aux = aux.getIzquierdo();
         }
@@ -287,6 +297,72 @@ public class AVL {
     }
     
     //metodos de AVL
+    
+    
+    private NodoAVL balancearRaiz(NodoAVL raiz){
+        int balanceRaiz = balance(raiz);
+        if(!estaBalanceado(balanceRaiz)){
+            raiz = aplicarRotaciones(raiz, balanceRaiz);
+        }
+        return raiz;
+    }
+    
+    /***
+     * balanceamos el nodo actual
+     * @param nodo 
+     */
+    private boolean balancear(NodoAVL padre, NodoAVL subNodo, char hijo){
+        boolean retorno = false;
+        if(subNodo != null){
+            int balanceHijo = balance(subNodo);
+            if(!estaBalanceado(balanceHijo)){
+                NodoAVL balanceado = aplicarRotaciones(subNodo, balanceHijo);
+                if(hijo == 'I'){
+                    padre.setIzquierdo(balanceado);
+                    retorno = true;
+                }else{
+                    //el subarbol es el hd de el padre
+                    padre.setDerecho(balanceado);
+                    retorno = true;
+                }
+            }
+        }
+        return retorno;
+    }
+    
+    /***
+     * aplicamos las rotacion necesaria para ese nodo en caso de tener que aplicarla
+     * @param nodo al cual hay que aplicar una rotacion
+     * @param balanceNodo es el balance del nodo a apĺicar la rotacion
+     */
+    private NodoAVL aplicarRotaciones(NodoAVL nodo, int balanceNodo){
+        NodoAVL balanceado = null;
+        if(balanceNodo == -2 && nodo.getDerecho() != null){
+            //esta caido hacia la derecha
+            int balanceHijoDerecho = balance(nodo.getDerecho());
+            if(balanceHijoDerecho == -1){
+                //giro simple a la izquierda
+                balanceado = giroIzquierda(nodo);
+            }else{
+                //giro doble izquierda-derecha
+                balanceado = dobleIzquierdaDerecha(nodo);
+            }
+        }else{
+            if(balanceNodo == 2 && nodo.getIzquierdo()!= null){
+                //esta caido hacia la izquierda
+                int balanceHijoIzquierda = balance(nodo.getIzquierdo());
+                if(balanceHijoIzquierda == 1){
+                    //giro a la derecha simple
+                    balanceado = giroDerecha(nodo);
+                }else{
+                    //giro doble derecha-izquierda
+                    balanceado = dobleDerechaIzquierda(nodo);
+                }
+            }
+        }
+        return balanceado;
+    }
+    
     /***
      * !!!plantilla para el modelo de balancear para introducior mañana
      * evaluamos si un subarbol esta balanceado
@@ -294,11 +370,10 @@ public class AVL {
      * @return balance true si esta balanceado
      *         false si no no esta
      */
-    private boolean estaBalanceado(NodoBB nodo){
+    private boolean estaBalanceado(NodoAVL nodo){
         //vamos a obtener el balance del nodo
-        boolean balanceado = false;
         int balance = balance(nodo);
-        //evaluamos si esta dentro del limite aceptado
+        boolean balanceado = false;
         if(balance > -2 && balance < 2){
             balanceado = true;
         }
@@ -311,10 +386,21 @@ public class AVL {
      * @return retornamos el balance del arbol: -1,0,1 esta balanceado
      *         2,-2 no lo esta hay que rotar!
      */
-    private int balance(NodoBB nodo){
+    private int balance(NodoAVL nodo){
         //vamos a obtener el balance del arbol que se saca:
         //Altura(HI) - Altura(HD)
-        return altura(nodo.getIzquierdo()) - altura(nodo.getDerecho());
+        int balanceIzquierdo = -1;
+        int balanceDerecho = -1;
+        
+        if(nodo.getIzquierdo() != null){
+            balanceIzquierdo = nodo.getIzquierdo().getAltura();
+        }
+        
+        if(nodo.getDerecho() != null){
+            balanceDerecho = nodo.getDerecho().getAltura();
+        }
+        
+        return balanceIzquierdo + balanceDerecho;
     }
     
     /***
@@ -324,7 +410,7 @@ public class AVL {
      * @param nodo subraiz del subarbol, que queremos saber su altura
      * @return retorna la altura de ese subarbol
      */
-    private int altura(NodoBB nodo){
+    public int altura(NodoAVL nodo){
         //obtenemos la altura de un nodo
         int retorno = -1;
         if(nodo != null){
@@ -343,6 +429,58 @@ public class AVL {
     
     //rotaciones
     /***
+     * el subarbol esta caido hacia la izquierda, hay que rotar hacia la 
+     * derecha
+     * @param padre es la raiz del subarbol donde esta desbalanceado 
+     */
+    private void simpleDerecha(NodoAVL padre){
+        NodoAVL nuevoPadre = giroDerecha(padre);
+        //modificamos el nodo padre
+        padre.setElemento(nuevoPadre.getElemento());
+        padre.setIzquierdo(nuevoPadre.getIzquierdo());
+        padre.setDerecho(nuevoPadre.getDerecho());
+    }
+    
+    /***
+     * el subarbol esta caido hacia la derecha, hay que rotar hacia la 
+     * izquierda
+     * @param padre es la raiz del subarbol donde esta desbalanceado
+     */
+    private void simpleIzquierda(NodoAVL padre){
+        NodoAVL nuevoPadre = giroIzquierda(padre);
+        //modificamos el nodo padre
+        padre.setElemento(nuevoPadre.getElemento());
+        padre.setIzquierdo(nuevoPadre.getIzquierdo());
+        padre.setDerecho(nuevoPadre.getDerecho());
+    }
+    
+    /***
+     * tenemos que el subarbol esta caido hacia la derecha (-2), y su hijo 
+     * derecho esta caido hacia la izquierda (1)
+     * @param padre es nodo raiz del subarbol desbalanceado hacia la derecha
+     */
+    private NodoAVL dobleDerechaIzquierda(NodoAVL padre){
+        //hacemos girar hacia la derecha el hijo
+        NodoAVL hijoDerecha = giroDerecha(padre.getDerecho());
+        padre.setDerecho(hijoDerecha);
+        //hacemos girar padre a la izquierda
+        return giroIzquierda(padre);
+    }
+    
+    /***
+     * tenemos que el subarbol esta caido hacia la izquierda (2), y su hijo 
+     * izquierdo esta caido hacia la derecha (-1)
+     * @param padre es nodo raiz del subarbol desbalanceado hacia la izquierda
+     */
+    private NodoAVL dobleIzquierdaDerecha(NodoAVL padre){
+        //hacemos rotar hacia la izquierda al hijo izquierdo de padre
+        NodoAVL hijoHizquierdo = giroIzquierda(padre.getIzquierdo());
+        padre.setIzquierdo(hijoHizquierdo);
+        //hacemos rotar hacia la derecha a el padre
+        return giroDerecha(padre);
+    }
+    
+    /***
      * Este metodo rota al subarbol hacia de izquierda, esto es para mantener
      * el balance del arbol cuando esta caido a la derecha (balance -2)
      * @param padre es la raiz para la cual el arbol esta caido a la derecha
@@ -350,9 +488,10 @@ public class AVL {
      *                    esta un poco caido hacia la derecha (balance -1)
      * @return la nueva subraiz que sera el subarbol balanceado
      */
-    private NodoBB simpleIzquierda(NodoBB padre, NodoBB hijoDerecho){
+    private NodoAVL giroIzquierda(NodoAVL padre){
+        NodoAVL hijoDerecho = padre.getDerecho();
         //guardamos el hijo izquierdo de hijoDerecho en una variable temporal
-        NodoBB temp = hijoDerecho.getIzquierdo();
+        NodoAVL temp = hijoDerecho.getIzquierdo();
         //padre pasa a ser hijo de hijo derecho
         hijoDerecho.setIzquierdo(padre);
         //guardamos temp como hijo derecho de padre
@@ -370,18 +509,16 @@ public class AVL {
      *                      (balance 1)
      * @return el nuevo sobarbol balanceado
      */
-    private NodoBB simpleDerecha(NodoBB padre, NodoBB hijoIzquierdo){
+    private NodoAVL giroDerecha(NodoAVL padre){
+        NodoAVL hijoIzquierdo = padre.getIzquierdo();
         //guardamos el hijo derecho de hijoIzquierdo en un tmp
-        NodoBB temp = hijoIzquierdo.getDerecho();
+        NodoAVL temp = hijoIzquierdo.getDerecho();
         //hacemos que hijoIzquierdo tenga como derecho a su padre
         hijoIzquierdo.setDerecho(padre);
         //hacemos que tmp sea hijo izquierdo de padre
         padre.setIzquierdo(temp);
         return hijoIzquierdo;
     }
-    
-    
-    
     
     /***
      * evaluamos si un elemento esta en el arbol
@@ -402,7 +539,7 @@ public class AVL {
      * @param elemento que estamos buscando
      * @return si esta true (condion de corte de la busqueda) sino false
      */
-    private boolean perteneceAux(NodoBB subRaiz, Comparable elemento){
+    private boolean perteneceAux(NodoAVL subRaiz, Comparable elemento){
         boolean retorno = false;
         //si el nodo no es null
         if(subRaiz != null){
@@ -453,7 +590,7 @@ public class AVL {
      * @param subRaiz del subarbol
      * @param retorno es la referencia a la lista para insetar
      */
-    private void listaAux(NodoBB subRaiz, Lista retorno){
+    private void listaAux(NodoAVL subRaiz, Lista retorno){
         //recorremos en preorden
         if(subRaiz != null){
             listaAux(subRaiz.getIzquierdo(), retorno);
@@ -491,7 +628,7 @@ public class AVL {
      * @param minimo
      * @param maximo 
      */
-    private void listaRangoAuz(NodoBB subRaiz, Lista retorno, Comparable minimo, Comparable maximo){
+    private void listaRangoAuz(NodoAVL subRaiz, Lista retorno, Comparable minimo, Comparable maximo){
         //si la subraiz esta entre los maximos minimos
         if(subRaiz.getElemento().compareTo(minimo) >= 0 && subRaiz.getElemento().compareTo(maximo) <= 0){
             //hacemos lo mismo con nuetro HI que es menor al subarbol
@@ -552,7 +689,7 @@ public class AVL {
         AVL clon = new AVL();
         
         if(this.raiz != null){
-            clon.raiz = new NodoBB(this.raiz.getElemento(), null, null);
+            clon.raiz = new NodoAVL(this.raiz.getElemento(), null, null);
             //hacemos el llamado recursivo para ir armando el arbol
             cloneAux(this.raiz, clon.raiz);
         }
@@ -565,18 +702,18 @@ public class AVL {
      * @param subRaiz
      * @param subRaizClone 
      */
-    private void cloneAux(NodoBB subRaiz, NodoBB subRaizClone){
+    private void cloneAux(NodoAVL subRaiz, NodoAVL subRaizClone){
         if(subRaiz != null){
             if(subRaiz.getIzquierdo() != null){
                 //tenemos HI lo clonamos y los llamamos con ese
-                subRaizClone.setIzquierdo(new NodoBB(subRaiz.getIzquierdo().getElemento(), null, null));
+                subRaizClone.setIzquierdo(new NodoAVL(subRaiz.getIzquierdo().getElemento(), null, null));
                 //hacemos el llamado recursivo
                 cloneAux(subRaiz.getIzquierdo(), subRaizClone.getIzquierdo());
             }
             
             if(subRaiz.getDerecho() != null){
                 //tenemos HD lo clonamos y los llamamos con ese
-                subRaizClone.setDerecho(new NodoBB(subRaiz.getDerecho().getElemento(), null, null));
+                subRaizClone.setDerecho(new NodoAVL(subRaiz.getDerecho().getElemento(), null, null));
                 //hacemos el llamado recursivo
                 cloneAux(subRaiz.getDerecho(), subRaizClone.getDerecho());
             }
@@ -611,13 +748,13 @@ public class AVL {
      * @param raiz
      * @return String
      */
-    private String auxToString(NodoBB raiz){
+    private String auxToString(NodoAVL raiz){
         String retorno = "";
         if(raiz != null){
             retorno = raiz.getElemento().toString()+":";
             
-            NodoBB izquierdo = raiz.getIzquierdo();
-            NodoBB derecho = raiz.getDerecho();
+            NodoAVL izquierdo = raiz.getIzquierdo();
+            NodoAVL derecho = raiz.getDerecho();
             
             if( izquierdo != null){
                 retorno = retorno + " HI:"+izquierdo.getElemento().toString();

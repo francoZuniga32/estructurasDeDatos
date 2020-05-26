@@ -1,3 +1,6 @@
+/***
+ * 
+ */
 package conjuntitas.dinamico;
 
 /**
@@ -7,6 +10,7 @@ public class NodoBB {
     private Comparable elemento;
     private NodoBB izquirdo;
     private NodoBB derecho;
+    private int altura;
     
     public NodoBB(Comparable argElemento, NodoBB argNodoIzquierdo, NodoBB argNodoDerecho){
         this.elemento = argElemento;

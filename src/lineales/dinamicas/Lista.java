@@ -209,28 +209,30 @@ public class Lista{
      *         false si no encontro dicho elemento
      */
     public boolean eliminarApariciones(Object elemento){
-        //vamos a recorrer los nodos buscando
         boolean retorno = false;
-        
+        //si la lista no esta vacia entonces vamos a recorrerla
         if(this.cabecera != null){
-            System.out.println("No es vacia");
-            //evaluamos en la pisicion 1 donde esta la babecera
-            if(this.cabecera.getElemento().equals(elemento)){
-                this.cabecera = this.cabecera.getEnlace();
-                this.longitud --;
-                retorno = true;
-                System.out.println("esta en la cabecera");
-            }else{
-                int i = 1;
-                Nodo puntero = this.cabecera;
-                while(i <= longitud){
-                    if(puntero.getEnlace().getElemento().equals(elemento)){
-                        Nodo enlaceDeEnlace = puntero.getEnlace().getEnlace();
-                        puntero.setEnlace(enlaceDeEnlace);
-                        longitud--;
-                        retorno = true;
+            //evaluamos en la pisicion 1 donde esta la cabecera
+            while(this.cabecera.getElemento().equals(elemento)){
+                Nodo nuevo = null;
+                if(this.cabecera.getEnlace() != null){
+                    nuevo = this.cabecera.getEnlace();   
+                }
+                this.cabecera = nuevo;
+                this.longitud--;
+            }
+            Nodo aux = this.cabecera;
+            while(aux.getEnlace() != null){
+                if(aux.getEnlace().getElemento().equals(elemento)){
+                    //en ese caso pasamos al siguiente enlace
+                    Nodo nuevo = null;
+                    if(aux.getEnlace().getEnlace() != null){
+                        nuevo = aux.getEnlace().getEnlace();
                     }
-                    i++;
+                    aux.setEnlace(nuevo);
+                    this.longitud--;
+                }else{
+                    aux = aux.getEnlace();
                 }
             }
         }
@@ -299,4 +301,36 @@ public class Lista{
         }
         return retorno;
     }
+    
+    public Lista obtenerMultiplos(int numero){
+        Lista nuevaLista = new Lista();
+        if(this.cabecera != null){
+            obtenerMultiplosAux(nuevaLista, numero);
+        }
+        return nuevaLista;
+    }
+    
+    private void obtenerMultiplosAux(Lista nuevaLista, int numero){
+        if(numero <= this.longitud){
+            Nodo aux = this.cabecera;
+            Nodo aux2 = null;
+            int i = 1;
+            
+            while(i < this.longitud){
+                if(i % numero == 0){
+                    if(nuevaLista.cabecera == null){
+                        nuevaLista.cabecera = new Nodo(aux.getElemento(), null);
+                        aux2 = nuevaLista.cabecera;
+                    }else{
+                        Nodo nuevo = new Nodo(aux.getElemento(), null);
+                        aux2.setEnlace(nuevo);
+                        aux2 = aux2.getEnlace();
+                    }
+                }
+                aux = aux.getEnlace();
+                i++;
+            }
+        }
+    }
+    
 }
