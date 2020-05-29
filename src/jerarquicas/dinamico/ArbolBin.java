@@ -264,13 +264,14 @@ public class ArbolBin {
      * @return 
      */
     private int nivelRecursivo(NodoArbol raiz, Object elemento){
-        //evaluamos si el elemento esta en los hijos de la raiz
+        //evaluamos si el elemento es el nodo actual en ese caso retorno 1
         int retorno = 0;
         boolean control = true;
         
         if(raiz.getElemento().equals(elemento)){
             retorno = 1;
         }else{
+            
             //si el HI no es null, nos metemos
             if(raiz.getIzquierdo() != null){
                 int retornoIzquierda = nivelRecursivo(raiz.getIzquierdo(), elemento);
@@ -278,12 +279,12 @@ public class ArbolBin {
                     retorno = 1 + retornoIzquierda;
                     control = false;
                 }
-            }else{
-                if(raiz.getDerecho() != null){
-                    int retornoDerecha = nivelRecursivo(raiz.getIzquierdo(), elemento);
-                    if(retornoDerecha > 0 && control){
-                        retorno = 1 + retornoDerecha;
-                    }
+            }
+            
+            if(control && raiz.getDerecho() != null){
+                int retornoDerecha = nivelRecursivo(raiz.getDerecho(), elemento);
+                if(retornoDerecha > 0){
+                    retorno = 1 + retornoDerecha;
                 }
             }
         }
@@ -593,4 +594,32 @@ public class ArbolBin {
         }
     }
     
+    
+    
+    public ArbolBin cloneInvertido(){
+        ArbolBin clon = new ArbolBin();
+        if(this.raiz != null){
+            clon.raiz = new NodoArbol(this.raiz.getElemento(), null, null);
+            auxCloneInvertido(this.raiz, clon.raiz);
+        }
+        
+        return clon;
+    }
+    
+    private void auxCloneInvertido(NodoArbol raizOriginal, NodoArbol raizClone){
+        //vamos a evalur si tenemos el HI en el nodo original
+        if(raizOriginal.getIzquierdo() != null){
+            //creamos un nodo arbol con los elementos de este HI
+            NodoArbol cloneIzquierdo = new NodoArbol(raizOriginal.getIzquierdo().getElemento(), null, null);
+            raizClone.setDerecho(cloneIzquierdo);
+            auxCloneInvertido(raizOriginal.getIzquierdo(), raizClone.getDerecho());
+        }
+        
+        if(raizOriginal.getDerecho() != null){
+            //creamos un nodo arbol con los elementos de este HI
+            NodoArbol cloneDerecho = new NodoArbol(raizOriginal.getDerecho().getElemento(), null, null);
+            raizClone.setIzquierdo(cloneDerecho);
+            auxCloneInvertido(raizOriginal.getDerecho(), raizClone.getIzquierdo());
+        }
+    }
 }

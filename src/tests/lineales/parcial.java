@@ -1,4 +1,5 @@
 import lineales.dinamicas.*;
+import jerarquicas.dinamico.*;
 package tests.lineales;
 
 /**
@@ -6,6 +7,77 @@ package tests.lineales;
  * @author franco
  */
 public class parcial {
+    
+    public static void main(String[] args) {
+        Lista L1 = new Lista();
+        L1.insertar('A', L1.longitud()+1);
+        L1.insertar('B', L1.longitud()+1);
+        L1.insertar('C', L1.longitud()+1);
+        L1.insertar('D', L1.longitud()+1);
+        L1.insertar('E', L1.longitud()+1);
+        L1.insertar('B', L1.longitud()+1);
+        L1.insertar('G', L1.longitud()+1);
+        System.out.println(L1.toString());
+        L1.eliminarApariciones('B');
+        System.out.println(L1.toString());
+        
+        
+        if(verificarBalanece("{[()()()][()]}")){
+            System.out.println("Esta balanceada");
+        }
+        
+        Cola Q1 = new Cola();
+        Q1.poner(1);
+        Q1.poner(2);
+        Q1.poner(3);
+        Q1.poner(4);
+        Q1.poner(5);
+        Q1.poner(6);
+        Q1.poner(7);
+        Q1.poner(8);
+        Q1.poner(9);
+        System.out.println(Q1.toString());
+        System.out.println(generarSecuencia(Q1, 3).toString());
+        
+        System.out.println("Probamos el punto de arboles ");
+        ArbolBin A1 = new ArbolBin();
+        A1.insertar('A', 'A', 'I');
+        A1.insertar('B', 'A', 'I');
+        A1.insertar('C', 'A', 'D');
+        A1.insertar('D', 'B', 'I');
+        System.out.println(A1.toString());
+        System.out.println("El mismo arbol invertido");
+        ArbolBin A2 = A1.cloneInvertido();
+        System.out.println(A2.toString());
+        System.out.println("Insertamos E como hijo derecho de D: "+A1.insertar('E', 'D', 'D'));
+        System.out.println(A1.toString());
+        System.out.println("El nivel de E es: "+A1.nivel('E'));
+    }
+    
+    public static Lista generarSecuencia(Cola c, int frecuencia){
+        Cola cola = c.clone();
+        Lista retorno = new Lista();
+        
+        int longitud = 1;
+        int indice = 0;
+        int indiceAux = 1;
+        
+        while(!cola.esVacia()){
+            indice = indice + 2;
+            retorno.insertar(cola.obtenerFrente(), indiceAux);
+            retorno.insertar(cola.obtenerFrente(), indice);
+            cola.sacar();
+            
+            if(longitud % frecuencia == 0 || cola.esVacia()){
+                indice++;
+                retorno.insertar('$', indice);
+                indiceAux = indice + 1;
+            }
+            
+            longitud++;
+        }
+        return retorno;
+    }
     
     public static boolean verificarBalanece(String expresion){
         boolean retorno = true;
@@ -60,22 +132,4 @@ public class parcial {
         return retorno;
     }
     
-    public static void main(String[] args) {
-        Lista L1 = new Lista();
-        L1.insertar('A', L1.longitud()+1);
-        L1.insertar('B', L1.longitud()+1);
-        L1.insertar('C', L1.longitud()+1);
-        L1.insertar('D', L1.longitud()+1);
-        L1.insertar('E', L1.longitud()+1);
-        L1.insertar('B', L1.longitud()+1);
-        L1.insertar('G', L1.longitud()+1);
-        System.out.println(L1.toString());
-        L1.eliminarApariciones('B');
-        System.out.println(L1.toString());
-        
-        
-        if(verificarBalanece("({}{}])")){
-            System.out.println("Esta balanceada");
-        }
-    }
 }
