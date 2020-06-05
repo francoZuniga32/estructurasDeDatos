@@ -37,7 +37,8 @@ public class parcial {
         Q1.poner(8);
         Q1.poner(9);
         System.out.println(Q1.toString());
-        System.out.println(generarSecuencia(Q1, 3).toString());
+        System.out.println(generarSecuencia(Q1, 0).toString());
+        System.out.println("Cola to Lista: "+colaToLista(Q1, 0));
         
         System.out.println("Probamos el punto de arboles ");
         ArbolBin A1 = new ArbolBin();
@@ -53,6 +54,39 @@ public class parcial {
         System.out.println(A1.toString());
         System.out.println("El nivel de E es: "+A1.nivel('E'));
     }
+    
+    public static Lista colaToLista(Cola cola, int Frecuencia){
+        Cola colaClon = cola.clone();
+        Lista retorno = new Lista();
+        Pila aux = new Pila();
+        
+        int longitud = 1;
+        
+        while(!colaClon.esVacia()){
+            //apilamos en aux en frente de a cola, e insertamos en la 
+            aux.apilar(colaClon.obtenerFrente());
+            retorno.insertar(colaClon.obtenerFrente(), longitud);
+            colaClon.sacar();
+            
+            //en caso de que estemos en una frecuencia realizamos la operacion
+            if(longitud % Frecuencia == 0 || colaClon.esVacia()){
+                
+                while(!aux.esVacia()){
+                    retorno.insertar(aux.obtenerTope(), longitud + 1);
+                    retorno.insertar(aux.obtenerTope(), longitud + 2);
+                    longitud++;
+                    aux.desapilar();
+                }
+                longitud = retorno.longitud();
+                retorno.insertar('$', longitud+1);
+                System.out.println(retorno.toString());
+            }
+            
+            longitud++;
+        }
+        return retorno;
+    }
+    
     
     public static Lista generarSecuencia(Cola c, int frecuencia){
         Cola cola = c.clone();

@@ -31,9 +31,18 @@ public class AVL {
             this.raiz = new NodoAVL(elemento, null, null);
             retorno = true;
         }else{
-            //vamos a comparar con la raiz y mandarlo por el hijo que corresponde
-            retorno = insertarAux(raiz, elemento);
+            if(!this.raiz.getElemento().equals(elemento)){
+                if(this.raiz.getElemento().compareTo(elemento) > 0){
+                    //vamos a relizar la insercion por la izquierda de la raiz
+                    retorno = insertarAuxInsertarHijos(this.raiz, raiz.getIzquierdo(), 'I', elemento);
+                }else{
+                    //vamos a realizar la insercion por la derecha de la raiz
+                    retorno = insertarAuxInsertarHijos(this.raiz, raiz.getDerecho(), 'D', elemento);
+                }
+            }
         }
+        
+        //
         return retorno;
     }
     
@@ -44,43 +53,33 @@ public class AVL {
      * @param elemento
      * @return 
      */
-    private boolean insertarAux(NodoAVL padre, NodoAVL subRaiz, Comparable elemento){
+    private boolean insertarAuxInsertarHijos(NodoAVL padre, NodoAVL subRaiz, char hijo, Comparable elemento){
         //comparamos con el elemento actual
         boolean retorno = false;
-        if(!subRaiz.getElemento().equals(elemento)){
-            //en caso de que no sea igual a la raiz vamos a comprar con la raiz
-            //comparamos con la raiz
-            if(subRaiz.getElemento().compareTo(elemento) > 0){
-                //en caso de que sea menor a la subraiz
-                if(subRaiz.getIzquierdo() != null){
-                    //en caso de tener un hijo izquierdo llamamos recursivamente
-                    retorno = insertarAux(subRaiz.getIzquierdo(), elemento);
+        
+        if(subRaiz != null){
+            if(!subRaiz.getElemento().equals(elemento)){
+                if(subRaiz.getElemento().compareTo(elemento) < 0){
+                    //nos movemos a la izquierda de la subRaiz
+                    retorno = insertarAuxInsertarHijos(subRaiz, subRaiz.getIzquierdo(), 'I', elemento);
                 }else{
-                    //en caso de no tener un hijo izquierdo insertamos
-                    subRaiz.setIzquierdo(new NodoAVL(elemento, null, null));
-                    retorno = true;
+                    //nos movemos a la derecha de la subRaiz
+                    retorno = insertarAuxInsertarHijos(subRaiz, subRaiz.getDerecho(), 'D', elemento);
                 }
+            }
+        }else{
+            //creamos y enlazamos en nodo
+            NodoAVL nuevoHIjo = new NodoAVL(elemento, null, null);
+            nuevoHIjo.recalcularAltura();
+            //enlazamos el padre con el hijo
+            if(hijo == 'I') {
+                padre.setIzquierdo(nuevoHIjo);
             }else{
-                //en caso de que sea mayor a la subraiz
-                if(subRaiz.getDerecho()!= null){
-                    //en caso de tener un hijo izquierdo llamamos recursivamente
-                    retorno = insertarAux(subRaiz.getDerecho(), elemento);
-                }else{
-                    //en caso de no tener un hijo izquierdo insertamos
-                    subRaiz.setDerecho(new NodoAVL(elemento, null, null));
-                    retorno = true;
-                }
+                padre.setDerecho(nuevoHIjo);
             }
+            retorno = true;
         }
-        //si insertamos balanceamos el nodo
-        if(retorno){
-            subRaiz.recalcularAltura();
-            //evaluamos el balance de altura llamando al metodo
-            if(!estaBalanceado(subRaiz)){
-                //si no esta balanceado procedemos a balancearlo
-                //intercambiamos el nodo por el actual
-            }
-        }
+        
         return retorno;
     }
     

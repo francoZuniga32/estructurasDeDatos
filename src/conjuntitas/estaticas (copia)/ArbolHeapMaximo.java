@@ -1,19 +1,26 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package conjuntitas.estaticas;
+
 /**
+ *
  * @author franco
  */
-public class ArbolHeapMinimo {
+public class ArbolHeapMaximo {
     private Comparable[] heap;
     private int ultimo = 0;
 
-    public ArbolHeapMinimo(){
+    public ArbolHeapMaximo(){
         this.heap = new Comparable[11];
     }
 
     public boolean insertar(Object elemento){
          boolean retorno = false;
          //insertamos en el lugar mas a la izquierda libre
-         if(this.ultimo + 1 < this.heap.length){
+         if(this.heap.length > this.ultimo + 1){
              this.heap[this.ultimo + 1] = (Comparable) elemento;
              this.ultimo++;
              ordenarHaciaArriva();
@@ -51,14 +58,14 @@ public class ArbolHeapMinimo {
                 //evaluamos si tenemos HD
                 if(posicionHI < this.ultimo){
                     //elegimos el menor de los dos hermanos
-                    if(this.heap[posicionHI + 1].compareTo(this.heap[posicionHI]) < 0){
+                    if(this.heap[posicionHI + 1].compareTo(this.heap[posicionHI]) > 0){
                         //el HD es menor al HI y nos movemos al menor
                         posicionHI++;
                     }
                 }
                 
                 //vamos a compara el Hijo mas pequeño con el padre
-                if(this.heap[posicionHI].compareTo(compara) < 0){
+                if(this.heap[posicionHI].compareTo(compara) > 0){
                     //en caso de que el padre sea mayor que el menor de los hijos lo intercambiamos
                     this.heap[posicionPadre] = this.heap[posicionHI];
                     this.heap[posicionHI] = compara;
@@ -83,7 +90,7 @@ public class ArbolHeapMinimo {
         boolean control = true;
         while(padre >= 1 && control){
             //compramos el nodo final con su padre u guradamos su pocicion
-            if(this.heap[i].compareTo(this.heap[padre]) < 0){
+            if(this.heap[i].compareTo(this.heap[padre]) > 0){
                 //los intercambiamos
                 int tmp1 = (int) this.heap[i];
                 this.heap[i] = this.heap[padre];
@@ -105,18 +112,6 @@ public class ArbolHeapMinimo {
         }
         
         return cima;
-    }
-    
-    public ArbolHeapMinimo clone(){
-        ArbolHeapMinimo clon = new ArbolHeapMinimo();
-        //clonamos toda la estrcutura del arreglo
-        for (int i = 1; i <= this.ultimo; i++) {
-            clon.heap[i] = this.heap[i]; 
-        }
-        //clonamos la referencia a la ultima pocision insertada
-        clon.ultimo = this.ultimo;
-        //retornamos el arbol clonado
-        return clon;
     }
 
     public String toString(){
