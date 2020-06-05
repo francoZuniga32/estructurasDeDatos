@@ -42,6 +42,9 @@ public class AVL {
             }
         }
         
+        if(retorno){
+            this.raiz.recalcularAltura();
+        }
         //
         return retorno;
     }
@@ -77,7 +80,12 @@ public class AVL {
             }else{
                 padre.setDerecho(nuevoHIjo);
             }
+            subRaiz = nuevoHIjo;
             retorno = true;
+        }
+        
+        if(retorno){
+            subRaiz.recalcularAltura();
         }
         
         return retorno;
@@ -297,36 +305,13 @@ public class AVL {
     
     //metodos de AVL
     
-    
-    private NodoAVL balancearRaiz(NodoAVL raiz){
-        int balanceRaiz = balance(raiz);
-        if(!estaBalanceado(balanceRaiz)){
-            raiz = aplicarRotaciones(raiz, balanceRaiz);
-        }
-        return raiz;
-    }
-    
     /***
-     * balanceamos el nodo actual
-     * @param nodo 
+     * 
+     * @param nodo
+     * @return 
      */
-    private boolean balancear(NodoAVL padre, NodoAVL subNodo, char hijo){
-        boolean retorno = false;
-        if(subNodo != null){
-            int balanceHijo = balance(subNodo);
-            if(!estaBalanceado(balanceHijo)){
-                NodoAVL balanceado = aplicarRotaciones(subNodo, balanceHijo);
-                if(hijo == 'I'){
-                    padre.setIzquierdo(balanceado);
-                    retorno = true;
-                }else{
-                    //el subarbol es el hd de el padre
-                    padre.setDerecho(balanceado);
-                    retorno = true;
-                }
-            }
-        }
-        return retorno;
+    public NodoAVL balancear(NodoAVL nodo){
+        
     }
     
     /***
@@ -756,13 +741,13 @@ public class AVL {
             NodoAVL derecho = raiz.getDerecho();
             
             if( izquierdo != null){
-                retorno = retorno + " HI:"+izquierdo.getElemento().toString();
+                retorno = retorno + " HI:"+izquierdo.getElemento().toString()+"Al: "+izquierdo.getAltura();
             }else{
                 retorno = retorno + " HI:-";
             }
            
             if( derecho != null){
-                retorno = retorno + " HD:"+derecho.getElemento().toString();
+                retorno = retorno + " HD:"+derecho.getElemento().toString()+"Al: "+derecho.getAltura();
             }else{
                 retorno = retorno + " HD:-";
             }

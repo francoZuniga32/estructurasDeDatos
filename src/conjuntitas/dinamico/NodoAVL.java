@@ -30,20 +30,17 @@ public class NodoAVL {
     }
     
     public void recalcularAltura(){
-        int altura = 0;
-        if(this.izquirdo != null || this.derecho != null){
-            
-            int alturaIzquierdo = this.izquirdo.getAltura();
-            int alturaDerecho = this.derecho.getAltura();
-            //tomamos al altura mas grande de los hijos
-            if(alturaIzquierdo >= alturaDerecho){
-                altura = alturaIzquierdo + 1;
-            }else{
-                altura = alturaDerecho + 1;
-            }
-            
+        int alturaDerecho = 0;
+        int alturaIzquierdo = 0;
+        if(this.izquirdo != null){
+            alturaIzquierdo = this.izquirdo.getAltura();
         }
-        this.altura = altura;
+        
+        if(this.derecho != null){
+            alturaDerecho = this.derecho.getAltura();
+        }
+        
+        this.altura = Math.max(alturaIzquierdo, alturaDerecho);
     }
     
     public void setIzquierdo(NodoAVL argNodoIzquierdo){
