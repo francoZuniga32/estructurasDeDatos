@@ -164,6 +164,7 @@ public class Lista{
      */
     public void vaciar(){
         this.cabecera = null;
+        this.longitud = 0;
     }
     
     /***

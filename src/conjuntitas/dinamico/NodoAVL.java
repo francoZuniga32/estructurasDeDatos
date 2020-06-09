@@ -15,6 +15,7 @@ public class NodoAVL {
         this.elemento = argElemento;
         this.izquirdo = argNodoIzquierdo;
         this.derecho = argNodoDerecho;
+        this.altura = 0;
     }
     
     public void setElemento(Comparable argElemento){
@@ -30,17 +31,23 @@ public class NodoAVL {
     }
     
     public void recalcularAltura(){
-        int alturaDerecho = 0;
-        int alturaIzquierdo = 0;
-        if(this.izquirdo != null){
-            alturaIzquierdo = this.izquirdo.getAltura();
+        if(this.izquirdo != null || this.derecho != null){
+            //tiene al menos un hijo por lo cual vamos a comparar sus alturas 
+            int alturaDerecho = 0;
+            int alturaIzquierdo = 0;
+            
+            if(this.izquirdo != null){
+                alturaIzquierdo = this.izquirdo.getAltura();
+            }
+            
+            if(this.derecho != null){
+                alturaDerecho = this.derecho.getAltura();
+            }
+            
+            this.altura = Math.max(alturaIzquierdo, alturaDerecho) + 1;
+        }else{
+            this.altura = 0;
         }
-        
-        if(this.derecho != null){
-            alturaDerecho = this.derecho.getAltura();
-        }
-        
-        this.altura = Math.max(alturaIzquierdo, alturaDerecho);
     }
     
     public void setIzquierdo(NodoAVL argNodoIzquierdo){

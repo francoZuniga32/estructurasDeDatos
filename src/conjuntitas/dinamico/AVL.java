@@ -44,6 +44,7 @@ public class AVL {
         
         if(retorno){
             this.raiz.recalcularAltura();
+            balancearRaiz(this.raiz);
         }
         //
         return retorno;
@@ -62,7 +63,7 @@ public class AVL {
         
         if(subRaiz != null){
             if(!subRaiz.getElemento().equals(elemento)){
-                if(subRaiz.getElemento().compareTo(elemento) < 0){
+                if(subRaiz.getElemento().compareTo(elemento) > 0){
                     //nos movemos a la izquierda de la subRaiz
                     retorno = insertarAuxInsertarHijos(subRaiz, subRaiz.getIzquierdo(), 'I', elemento);
                 }else{
@@ -74,18 +75,20 @@ public class AVL {
             //creamos y enlazamos en nodo
             NodoAVL nuevoHIjo = new NodoAVL(elemento, null, null);
             nuevoHIjo.recalcularAltura();
+            subRaiz = nuevoHIjo;
             //enlazamos el padre con el hijo
             if(hijo == 'I') {
                 padre.setIzquierdo(nuevoHIjo);
             }else{
                 padre.setDerecho(nuevoHIjo);
             }
-            subRaiz = nuevoHIjo;
+            
             retorno = true;
         }
         
         if(retorno){
             subRaiz.recalcularAltura();
+            balancear(padre, subRaiz, hijo);
         }
         
         return retorno;
@@ -114,6 +117,12 @@ public class AVL {
                    retorno = eliminarAux(this.raiz, this.raiz.getDerecho(), elemento, 'D');
                }
             }
+        }
+        
+        if(retorno){
+            //balanceamos
+            this.raiz.recalcularAltura();
+            balancearRaiz(this.raiz);
         }
         
         return retorno;
@@ -171,6 +180,7 @@ public class AVL {
                     break;
             }
             //en caso de que la raiz del subarbol sea el elemento se verifica alguna de las condiciones
+            subRaiz = remplazo;
             if(hijo == 'I'){
                 padre.setIzquierdo(remplazo);
                 retorno = true;
@@ -190,7 +200,10 @@ public class AVL {
             }
         }
         //balancemos
-        balance(subRaiz);
+        if(retorno){
+            subRaiz.recalcularAltura();
+            balancear(padre, subRaiz, hijo);
+        }
         return retorno;
     }
     
@@ -310,8 +323,60 @@ public class AVL {
      * @param nodo
      * @return 
      */
-    public NodoAVL balancear(NodoAVL nodo){
+    public boolean balancear(NodoAVL padre, NodoAVL nodo, char hijo){
+        //evaluamos el balande de nodo
+        int balance = balance(nodo);
         
+        if(balance < -1 || balance > 1){
+            //hay que balancear el nodo
+            NodoAVL balanceado = aplicarRotaciones(nodo);
+            if(hijo == 'I'){
+                padre.setIzquierdo(balanceado);
+            }else{
+                padre.setDerecho(balanceado);
+            }
+            padre.recalcularAltura();
+        }
+        
+        return true;
+    }
+    
+    /**
+     * caso especial de balanceo del nodo raiz
+     * @param nodo
+     * @return 
+     */
+    public boolean balancearRaiz(NodoAVL nodo){
+        //evaluamos el balande de nodo
+        int balance = balance(nodo);
+        NodoAVL balanceado = null;
+        if(balance < -1 || balance > 1){
+            //hay que balancear el nodo
+            this.raiz = aplicarRotaciones(nodo);
+        }
+        this.raiz.recalcularAltura();
+        return true;
+    }
+    
+    
+    /***
+     * retornamos el balance de un nodo
+     * @param nodo del cual queremos sacar el balance
+     * @return el balance del nodo dado
+     */
+    public int balance(NodoAVL nodo){
+        int alturaIzquierdo = -1;
+        int alturaDerecho = -1;
+        
+        if(nodo.getIzquierdo() != null){
+            alturaIzquierdo = nodo.getIzquierdo().getAltura();
+        }
+        
+        if(nodo.getDerecho() != null){
+            alturaDerecho = nodo.getDerecho().getAltura();
+        }
+        
+        return alturaIzquierdo - alturaDerecho;
     }
     
     /***
@@ -319,8 +384,9 @@ public class AVL {
      * @param nodo al cual hay que aplicar una rotacion
      * @param balanceNodo es el balance del nodo a apĺicar la rotacion
      */
-    private NodoAVL aplicarRotaciones(NodoAVL nodo, int balanceNodo){
+    private NodoAVL aplicarRotaciones(NodoAVL nodo){
         NodoAVL balanceado = null;
+        int balanceNodo = balance(nodo);
         if(balanceNodo == -2 && nodo.getDerecho() != null){
             //esta caido hacia la derecha
             int balanceHijoDerecho = balance(nodo.getDerecho());
@@ -329,7 +395,7 @@ public class AVL {
                 balanceado = giroIzquierda(nodo);
             }else{
                 //giro doble izquierda-derecha
-                balanceado = dobleIzquierdaDerecha(nodo);
+                balanceado = dobleDerechaIzquierda(nodo);
             }
         }else{
             if(balanceNodo == 2 && nodo.getIzquierdo()!= null){
@@ -340,103 +406,14 @@ public class AVL {
                     balanceado = giroDerecha(nodo);
                 }else{
                     //giro doble derecha-izquierda
-                    balanceado = dobleDerechaIzquierda(nodo);
+                    balanceado = dobleIzquierdaDerecha(nodo);
                 }
             }
         }
         return balanceado;
     }
     
-    /***
-     * !!!plantilla para el modelo de balancear para introducior mañana
-     * evaluamos si un subarbol esta balanceado
-     * @param nodo es la subraiz de el subarbol a evaluar
-     * @return balance true si esta balanceado
-     *         false si no no esta
-     */
-    private boolean estaBalanceado(NodoAVL nodo){
-        //vamos a obtener el balance del nodo
-        int balance = balance(nodo);
-        boolean balanceado = false;
-        if(balance > -2 && balance < 2){
-            balanceado = true;
-        }
-        return balanceado;
-    }
-    
-    /***
-     * retornamos el balance de un subarbol
-     * @param nodo es la subraiz del subarbol que queremos sacar su balance
-     * @return retornamos el balance del arbol: -1,0,1 esta balanceado
-     *         2,-2 no lo esta hay que rotar!
-     */
-    private int balance(NodoAVL nodo){
-        //vamos a obtener el balance del arbol que se saca:
-        //Altura(HI) - Altura(HD)
-        int balanceIzquierdo = -1;
-        int balanceDerecho = -1;
-        
-        if(nodo.getIzquierdo() != null){
-            balanceIzquierdo = nodo.getIzquierdo().getAltura();
-        }
-        
-        if(nodo.getDerecho() != null){
-            balanceDerecho = nodo.getDerecho().getAltura();
-        }
-        
-        return balanceIzquierdo + balanceDerecho;
-    }
-    
-    /***
-     * retornamos la altura de un nodo
-     * -1 si el nodo es null, si es hoja retorna 1 y asi va sumando mientras
-     * sube en el llamado recursivo
-     * @param nodo subraiz del subarbol, que queremos saber su altura
-     * @return retorna la altura de ese subarbol
-     */
-    public int altura(NodoAVL nodo){
-        //obtenemos la altura de un nodo
-        int retorno = -1;
-        if(nodo != null){
-            //vamos a obtener la altura de mis hijos
-            int retornoIzquierdo = altura(nodo.getIzquierdo());
-            int retornoDerecho = altura(nodo.getDerecho());
-            
-            if(retornoIzquierdo >= retornoDerecho){
-                retorno = retornoIzquierdo + 1;
-            }else{
-                retorno = retornoDerecho + 1;
-            }
-        }
-        return retorno;
-    }
-    
     //rotaciones
-    /***
-     * el subarbol esta caido hacia la izquierda, hay que rotar hacia la 
-     * derecha
-     * @param padre es la raiz del subarbol donde esta desbalanceado 
-     */
-    private void simpleDerecha(NodoAVL padre){
-        NodoAVL nuevoPadre = giroDerecha(padre);
-        //modificamos el nodo padre
-        padre.setElemento(nuevoPadre.getElemento());
-        padre.setIzquierdo(nuevoPadre.getIzquierdo());
-        padre.setDerecho(nuevoPadre.getDerecho());
-    }
-    
-    /***
-     * el subarbol esta caido hacia la derecha, hay que rotar hacia la 
-     * izquierda
-     * @param padre es la raiz del subarbol donde esta desbalanceado
-     */
-    private void simpleIzquierda(NodoAVL padre){
-        NodoAVL nuevoPadre = giroIzquierda(padre);
-        //modificamos el nodo padre
-        padre.setElemento(nuevoPadre.getElemento());
-        padre.setIzquierdo(nuevoPadre.getIzquierdo());
-        padre.setDerecho(nuevoPadre.getDerecho());
-    }
     
     /***
      * tenemos que el subarbol esta caido hacia la derecha (-2), y su hijo 
@@ -448,7 +425,11 @@ public class AVL {
         NodoAVL hijoDerecha = giroDerecha(padre.getDerecho());
         padre.setDerecho(hijoDerecha);
         //hacemos girar padre a la izquierda
-        return giroIzquierda(padre);
+        NodoAVL nuevoPadre = giroIzquierda(padre);
+        //recalculamos alturas 
+        padre.recalcularAltura();
+        hijoDerecha.recalcularAltura();
+        return nuevoPadre;
     }
     
     /***
@@ -457,30 +438,43 @@ public class AVL {
      * @param padre es nodo raiz del subarbol desbalanceado hacia la izquierda
      */
     private NodoAVL dobleIzquierdaDerecha(NodoAVL padre){
+        System.out.println("Aplicamos un giro izquierda-derecha");
         //hacemos rotar hacia la izquierda al hijo izquierdo de padre
-        NodoAVL hijoHizquierdo = giroIzquierda(padre.getIzquierdo());
-        padre.setIzquierdo(hijoHizquierdo);
+        NodoAVL hijoIzqueirdo = giroIzquierda(padre.getIzquierdo());
+        System.out.println("El nuevo hijo Izquierdo "+hijoIzqueirdo.getElemento().toString());
+        padre.setIzquierdo(hijoIzqueirdo);
         //hacemos rotar hacia la derecha a el padre
-        return giroDerecha(padre);
+        NodoAVL nuevoPadre = giroDerecha(padre);
+        System.out.println("El nuevo padre: "+nuevoPadre.getElemento().toString());
+        
+        //recalculasmos alturas
+        padre.recalcularAltura();
+        hijoIzqueirdo.recalcularAltura();
+        return nuevoPadre;
     }
     
     /***
-     * Este metodo rota al subarbol hacia de izquierda, esto es para mantener
-     * el balance del arbol cuando esta caido a la derecha (balance -2)
-     * @param padre es la raiz para la cual el arbol esta caido a la derecha
-     * @param hijoDerecho es el hacia donde esta caido el arbol, esta tambien
-     *                    esta un poco caido hacia la derecha (balance -1)
-     * @return la nueva subraiz que sera el subarbol balanceado
+     * En esta rotacion lo que pasa es que se intercambian los enlaces de padre
+     * e hijo derecho Esto es el HI del HD de padre pasa a ser el HD de padre
+     * y el HI de el HD de padre pasa a aser padre
+     * @param padre
+     * @return 
      */
-    private NodoAVL giroIzquierda(NodoAVL padre){
-        NodoAVL hijoDerecho = padre.getDerecho();
-        //guardamos el hijo izquierdo de hijoDerecho en una variable temporal
-        NodoAVL temp = hijoDerecho.getIzquierdo();
-        //padre pasa a ser hijo de hijo derecho
-        hijoDerecho.setIzquierdo(padre);
-        //guardamos temp como hijo derecho de padre
-        padre.setDerecho(temp);
-        return hijoDerecho;
+    private NodoAVL giroDerecha(NodoAVL padre){
+        NodoAVL hijoIzquierdo = padre.getIzquierdo();
+        //guardamos el hijo derecho de hijoIzquierdo en un tmp
+        NodoAVL temp = null;
+        if(hijoIzquierdo.getDerecho()!= null){
+            temp = hijoIzquierdo.getDerecho();
+        }
+        //hacemos que hijo tenga como derecho a su padre
+        hijoIzquierdo.setDerecho(padre);
+        //hacemos que tmp sea hijo izquierdo de padre
+        padre.setIzquierdo(temp);
+        
+        padre.recalcularAltura();
+        hijoIzquierdo.recalcularAltura();
+        return hijoIzquierdo;
     }
     
     /***
@@ -493,15 +487,24 @@ public class AVL {
      *                      (balance 1)
      * @return el nuevo sobarbol balanceado
      */
-    private NodoAVL giroDerecha(NodoAVL padre){
-        NodoAVL hijoIzquierdo = padre.getIzquierdo();
-        //guardamos el hijo derecho de hijoIzquierdo en un tmp
-        NodoAVL temp = hijoIzquierdo.getDerecho();
-        //hacemos que hijoIzquierdo tenga como derecho a su padre
-        hijoIzquierdo.setDerecho(padre);
-        //hacemos que tmp sea hijo izquierdo de padre
-        padre.setIzquierdo(temp);
-        return hijoIzquierdo;
+    private NodoAVL giroIzquierda(NodoAVL padre){
+        //tomamos al hijo derecho de padre
+        NodoAVL hijoDerecho = padre.getDerecho();
+        //tomamos el hijo izquiedo de nuetro hijo derecho
+        NodoAVL temp = null;
+        if(hijoDerecho.getIzquierdo() != null){
+            temp = hijoDerecho.getIzquierdo();
+        }
+        
+        //hacemos que padre sea hijo derecho de su hijo derecho
+        hijoDerecho.setIzquierdo(padre);
+        //hacemos que el hijo derecho de padre sea el HI de su hijo derecho
+        padre.setDerecho(temp);
+        
+        //recalculamos las alturas
+        padre.recalcularAltura();
+        hijoDerecho.recalcularAltura();
+        return hijoDerecho;
     }
     
     /***
@@ -735,19 +738,19 @@ public class AVL {
     private String auxToString(NodoAVL raiz){
         String retorno = "";
         if(raiz != null){
-            retorno = raiz.getElemento().toString()+":";
+            retorno = raiz.getElemento().toString()+" Al: "+raiz.getAltura()+" :";
             
             NodoAVL izquierdo = raiz.getIzquierdo();
             NodoAVL derecho = raiz.getDerecho();
             
             if( izquierdo != null){
-                retorno = retorno + " HI:"+izquierdo.getElemento().toString()+"Al: "+izquierdo.getAltura();
+                retorno = retorno + " HI:"+izquierdo.getElemento().toString();
             }else{
                 retorno = retorno + " HI:-";
             }
            
             if( derecho != null){
-                retorno = retorno + " HD:"+derecho.getElemento().toString()+"Al: "+derecho.getAltura();
+                retorno = retorno + " HD:"+derecho.getElemento().toString();
             }else{
                 retorno = retorno + " HD:-";
             }

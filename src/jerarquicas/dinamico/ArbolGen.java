@@ -176,7 +176,7 @@ public class ArbolGen {
     public int altura(){
         int retorno = -1;
         if(this.raiz != null){
-            retorno = retorno + alturaPaso(this.raiz);
+            retorno = alturaPaso(this.raiz);
         }
         return retorno;
     }
@@ -185,11 +185,11 @@ public class ArbolGen {
         int retorno = 0;
         
         //si la raiz no es null evaluamos
-        if(raiz != null){
-            retorno = 1;
+        if(raiz.getHijoIzquierdo() != null){
             //vamos a obtener el resultado de el hijo mas a la izquirda
             NodoGen aux = raiz.getHijoIzquierdo();
-            int retornoHijos = 0;
+            int retornoHijos = alturaPaso(aux);
+            aux = aux.getHermanoDerecho();
             //mientras halla hijos repite
             while(aux != null){
                 int retornoLlamado = alturaPaso(aux);
@@ -199,7 +199,7 @@ public class ArbolGen {
                 aux = aux.getHermanoDerecho();
             }
             
-            retorno = retorno + retornoHijos;
+            retorno = retornoHijos + 1;
         }
         
         return retorno;
@@ -314,21 +314,16 @@ public class ArbolGen {
     private void inordenPaso(NodoGen raiz, Lista inorden){
         //si la subraiz es no es null
         if(raiz != null){
-            //vamos a listar el 
+            //tomamos el hijo izquierdo de raiz
             NodoGen aux = raiz.getHijoIzquierdo();
             if(aux != null){
-                //recorremos el primer hijo en inorden
                 inordenPaso(aux, inorden);
-                //visitamos la raiz
-                inorden.insertar(raiz.getElemento(), inorden.longitud() +1);
-                //recorremos el resto de hijos en inorden
                 aux = aux.getHermanoDerecho();
-                while(aux != null){
-                    inordenPaso(aux, inorden);
-                    aux = aux.getHermanoDerecho();
-                }
-            }else{
-                System.out.print(raiz.getElemento().toString()+",");
+            }
+            inorden.insertar(raiz.getElemento(), inorden.longitud() +1);
+            while(aux != null){
+                inordenPaso(aux, inorden);
+                aux = aux.getHermanoDerecho();
             }
         }
     }
@@ -353,22 +348,23 @@ public class ArbolGen {
         }
     }
     
-    public void listarNiveles(){
+    public Lista listarNiveles(){
         //vamos a usar una cola para iterar
+        Lista retorno = new Lista();
         Cola q = new Cola();
         q.poner(this.raiz);
         
         while(!q.esVacia()){
             NodoGen aux = (NodoGen) q.obtenerFrente();
             q.sacar();
-            System.out.print(aux.getElemento().toString());
+            retorno.insertar(aux.getElemento(), retorno.longitud() + 1);
             aux = aux.getHijoIzquierdo();
             while(aux != null){
                 q.poner(aux);
                 aux = aux.getHermanoDerecho();
             }
         }
-        
+        return retorno;
     }
     
     public ArbolGen clone(){

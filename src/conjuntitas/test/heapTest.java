@@ -20,12 +20,12 @@ public class heapTest {
         //vamosa insertar el arbol heap maximo
         for (int i = 15; i > 0; i--) {
             System.out.println("inserta "+i+" en a:"+(a.insertar(i) ? sOk:sErr));
-            System.out.println("la cima es: "+a.obtenerCima());
+            System.out.println("la cima es: "+a.recuperarCima());
         }
         System.out.println(a.toString());
         for (int i = 0; i < 5; i++) {
-            System.out.println("eliminamos la cima"+(a.eliminar() ? sOk: sErr));
-            System.out.println("la cima es: "+a.obtenerCima());
+            System.out.println("eliminamos la cima"+(a.eliminarCima()? sOk: sErr));
+            System.out.println("la cima es: "+a.recuperarCima());
         }
         System.out.println(a.toString());
         

@@ -205,7 +205,7 @@ public class ArbolBin {
      * @return int es la altura del arbol completo
      */
     public int altura(){
-        int retorno = 0;
+        int retorno = -1;
         
         if(this.raiz != null){
             retorno = auxAltura(this.raiz);
@@ -221,18 +221,17 @@ public class ArbolBin {
      */
     private int auxAltura(NodoArbol raiz){
         //vamos a evaluar si la raiz no es null
-        int retorno = 0;
+        int retorno = -1;
         
         if(raiz != null){
-            //vamos a recorrer en 
-            retorno = 1;
+            //vamos a recorrer en
             int retornoIzquirda = auxAltura(raiz.getIzquierdo());
             int retornoDerecha = auxAltura(raiz.getDerecho());
             
             if(retornoIzquirda >= retornoDerecha){
-                retorno = retorno + retornoIzquirda;
+                retorno = retornoIzquirda + 1;
             }else{
-                retorno = retorno + retornoDerecha;
+                retorno = retornoDerecha + 1;
             }
         }
         
