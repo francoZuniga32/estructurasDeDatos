@@ -66,11 +66,7 @@ public class Pila {
      * @return boolean
      */
     public boolean esVacia(){
-        boolean retorno = false;
-        if(this.tope == null){
-            retorno = true;
-        }
-        return retorno;
+        return this.tope == null;
     }    
     
     /**

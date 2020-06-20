@@ -340,7 +340,7 @@ public class ArbolBin {
      * retornamos una lista de los elementos del arbol en preorden
      * @return Lista cuyos elementos se encuntran ordenados en preorden
      */
-    public Lista preorden(){
+    public Lista listarPreorden(){
         Lista preorden = new Lista();
         if(this.raiz != null){
             auxpreorden(this.raiz, preorden);
@@ -366,7 +366,7 @@ public class ArbolBin {
     /***
      * recorremos el arbol por inorden
      */
-    public Lista inorden(){
+    public Lista listarInorden(){
         Lista inorden = new Lista();
         if(this.raiz != null){
             auxInorden(this.raiz, inorden);   
@@ -390,7 +390,7 @@ public class ArbolBin {
     /***
      * recorremos el arbol por posorden
      */
-    public Lista posorden(){
+    public Lista listarPosorden(){
         Lista posorden = new Lista();
         if(this.raiz != null){
             auxPosOrden(this.raiz, posorden);
@@ -620,5 +620,41 @@ public class ArbolBin {
             raizClone.setIzquierdo(cloneDerecho);
             auxCloneInvertido(raizOriginal.getDerecho(), raizClone.getIzquierdo());
         }
+    }
+    
+    public Lista ansestros(Object elemento){
+        Lista retorno = new Lista();
+        if(this.raiz != null){
+            ansestrosAux(this.raiz, retorno, elemento);
+        }
+        return retorno;
+    }
+    
+    private boolean ansestrosAux(NodoArbol nodo, Lista ansestros, Object elemento){
+        boolean retorno = false;
+        
+        if(nodo != null){
+            if(nodo.getElemento().equals(elemento)){
+                //encontramos el elemento vamos a colocarlo en la lista
+                retorno = true;
+                ansestros.insertar(nodo.getElemento(), 1);
+            }else{
+                //buscamos por el lado izquierdo del arbol
+                
+                if(nodo.getIzquierdo() != null){
+                    retorno = ansestrosAux(nodo.getIzquierdo(), ansestros, elemento);
+                }
+                //buscamos por el lado derecho del arbol
+                if(!retorno && nodo.getDerecho() != null){
+                    retorno = ansestrosAux(nodo.getDerecho(), ansestros, elemento);
+                }
+                //si esta el elemento en un subhijo vamos a insertar el nodo
+                if(retorno){
+                    ansestros.insertar(nodo.getElemento(), 1);
+                }
+            }
+        }
+        
+        return retorno;
     }
 }

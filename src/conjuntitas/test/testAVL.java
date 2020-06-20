@@ -12,7 +12,7 @@ public class testAVL {
         AVL A1 = new AVL();
         //probamos los metodos de insercion
         System.out.println("USANDO DE PIBOTE LA RAIZ");
-        System.out.println("-------------------------------\n");
+        System.out.println("-------------------------Fran!!!5------\n");
         System.out.println("Un arbol Caido a la Izquierda y un poco a la derecha");
         System.out.println("Insertamos G espera OK!:\t\t\t"+(A1.insertar('G')? sOk: sErr));
         System.out.println("Insertamos C espera OK!:\t\t\t"+(A1.insertar('C')? sOk: sErr));

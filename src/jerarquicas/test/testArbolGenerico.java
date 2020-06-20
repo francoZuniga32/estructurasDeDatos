@@ -11,6 +11,7 @@ public class testArbolGenerico {
     public static void main(String[] args) {
         ArbolGen A1 = new ArbolGen();
         
+        //metodo de insercion de arbol generico
         System.out.println("insertamos A como raiz:"+(A1.insertar('A', 'A') ? sOk: sErr));
         System.out.println("insertamos B como hijo de A:"+(A1.insertar('B', 'A') ? sOk: sErr));
         System.out.println("insertamos C como hijo de A:"+(A1.insertar('C', 'A') ? sOk: sErr));
@@ -48,5 +49,6 @@ public class testArbolGenerico {
         ArbolGen A3 = new ArbolGen();
         System.out.println("insertamos K como hijo de F:"+(A3.insertar('A', 'A') ? sOk: sErr));
         System.out.println("Altura A3: "+A3.altura());
+        System.out.println("Creamos un arbol vacio: ");
     }
 }

@@ -438,4 +438,31 @@ public class ArbolGen {
         }
         return retorno;
     }
+    
+    //extencion rentrega
+    
+    public Lista frontera(){
+        Lista retorno = new Lista();
+        if(this.raiz != null){
+            fronteraAux(this.raiz, retorno);
+        }
+        return retorno;
+    }
+    
+    /***
+     * 
+     * @param nodo
+     * @param frontera 
+     */
+    private void fronteraAux(NodoGen nodo, Lista frontera){
+        if(nodo.getHijoIzquierdo() != null){
+            NodoGen aux = nodo.getHijoIzquierdo();
+            while(aux != null){
+                fronteraAux(aux, frontera);
+                aux = aux.getHermanoDerecho();
+            }
+        }else{
+            frontera.insertar(nodo.getElemento(), frontera.longitud() + 1);
+        }
+    }
 }

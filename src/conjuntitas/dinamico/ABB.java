@@ -211,23 +211,11 @@ public class ABB {
         NodoBB retorno = null;
         boolean complatado = false;
         //obtenemos los candidatos
-        NodoBB candidatoA = candidatoA(nodo.getIzquierdo());
         NodoBB candidatoB = candidatoB(nodo.getDerecho());
-        //evaluamos cual tiene menos hijos
-        int hijosCandidatoA = cantidadHijos(candidatoA);
-        int hijosCandidatoB = cantidadHijos(candidatoB);
-        //comparamos
-        if(hijosCandidatoA <= hijosCandidatoB){
-            //obtenemos el valor de este nodo y eliminamos por ese lado
-            nodo.setElemento(candidatoA.getElemento());
-            //eliminamos el elemento de candidato a por I
-            complatado = eliminarAux(nodo, nodo.getIzquierdo(), candidatoA.getElemento(), 'I');
-        }else{
-            //obtenemos el valor de este nodo y eliminamos por ese lado
-            nodo.setElemento(candidatoB.getElemento());
-            //eliminamos el elemento de candidato a por D
-            complatado = eliminarAux(nodo, nodo.getDerecho(), candidatoB.getElemento(), 'D');
-        }
+        //obtenemos el valor de este nodo y eliminamos por ese lado
+        nodo.setElemento(candidatoB.getElemento());
+        //eliminamos el elemento de candidato a por D
+        complatado = eliminarAux(nodo, nodo.getDerecho(), candidatoB.getElemento(), 'D');
         if(complatado){
             retorno = nodo;
         }
@@ -293,14 +281,10 @@ public class ABB {
         return retorno;
     }
     
-    public boolean esVacio(){
-        boolean retorno = false;
-        if(this.raiz != null){
-            retorno = true;
-        }
-        return retorno;
-    }
-    
+    /***
+     * 
+     * @return 
+     */
     public Lista lista(){
         Lista retorno = new Lista();
         
@@ -452,6 +436,18 @@ public class ABB {
     public void vaciar(){
         //se eliminan por perdida de referencia
         this.raiz = null;
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    public boolean esVacio(){
+        boolean retorno = true;
+        if(this.raiz != null){
+            retorno = false;
+        }
+        return retorno;
     }
     
     /***

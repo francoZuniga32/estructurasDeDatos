@@ -33,6 +33,7 @@ public class TestArbolBin {
 
         System.out.println("vamos a iniciar el test:");
         
+        //test de insercion
         //raiz nivel 1
         System.out.println("Instanciamos el arbol, se llama A1");
         System.out.println("Insertamos: A como raiz: \t\t\t\t\t"+(A1.insertar('A', 'A', 'D') ? sOk : sErr));
@@ -46,11 +47,13 @@ public class TestArbolBin {
         //nivel 4
         System.out.println("Insertamos G como HI de E: espera OK!\t\t\t\t"+(A1.insertar('G', 'E', 'I') ? sOk: sErr));
         System.out.println("Insertamos H como HD de E: espera OK!\t\t\t\t"+(A1.insertar('H', 'E', 'D') ? sOk: sErr));
-        //insetamos mal
         
+        
+        //test de insercion mal
         System.out.println("Insertamos G como HI de E ya ocupado: espera ERROR\t\t"+(A1.insertar('G', 'E', 'I') ? sOk: sErr));
         System.out.println("Insertamos Z como HD de W, pero W no existe: espera ERROR\t"+(A1.insertar('Z', 'W', 'D') ? sOk: sErr));
         
+        //metodos toString
         System.out.println("---------------------------------------------------");
         System.out.println("Probemos el toString del arbol:");
         System.out.println(A1.toString());
@@ -69,18 +72,21 @@ public class TestArbolBin {
         System.out.println("A4 toString:");
         System.out.println(A4.toString());
         
+        //modificacion para altura
         System.out.println("---------------------------------------------------");
         System.out.println("Modificamos el arbol clonado para poder probar el metodo altura");
         System.out.println("Insertamos I como HI de H: espera OK!\t\t\t\t"+(A2.insertar('I', 'H', 'I') ? sOk: sErr));
-        System.out.println("Insertamos I como HI de H: espera OK!\t\t\t\t"+(A2.insertar('J', 'H', 'D') ? sOk: sErr));
+        System.out.println("Insertamos J como HD de H: espera OK!\t\t\t\t"+(A2.insertar('J', 'H', 'D') ? sOk: sErr));
         System.out.println("mostramos el arbol A2:");
         System.out.println(A2.toString());
         
+        //test altura
         System.out.println("La altura de A1:"+A1.altura());
         System.out.println("La altura de A2:"+A2.altura());
         System.out.println("La altura de A3:"+A3.altura());
         System.out.println("La altura de A4:"+A4.altura());
         
+        //test padre
         System.out.println("---------------------------------------------------");
         System.out.println("Probamos el metodo padre: usamos el arbol A1");
         System.out.println("El padre de A es:"+A1.padre('A'));
@@ -104,22 +110,20 @@ public class TestArbolBin {
         System.out.println("Usando el arbol A3");
         System.out.println("El nivel de A es:"+A3.nivel('A'));
         
+        //test listar
         System.out.println("recorremos en los ordenes dados por la teoria de arboles:");
-        System.out.println("preorden:");
-        A1.preorden();
-        System.out.println("inorden:");
-        A1.inorden();
-        System.out.println("posorden");
-        A1.posorden();
-        System.out.println("por niveles");
-        A1.porNivel();
+        System.out.println("preorden:"+A1.listarPreorden().toString());
+        System.out.println("inorden:"+A1.listarInorden().toString());
+        System.out.println("posorden"+A1.listarPosorden().toString());
+        System.out.println("por niveles"+A1.porNivel().toString());
        
-        
+        //test toString
         System.out.println("A1:");
         System.out.println(A1.toString());
         System.out.println("A3");
         System.out.println(A3.toString());
         
+        //test patron
         Lista patron = new Lista();
         System.out.println("insetamos A en la lista: "+(patron.insertar('A', 1)? sOk: sErr));
         System.out.println("insetamos B en la lista: "+(patron.insertar('C', 2)? sOk: sErr));
@@ -133,5 +137,12 @@ public class TestArbolBin {
         }
         Lista frontera = A1.frontera();
         System.out.println(frontera.toString());
+        
+        //test de ansestros
+        System.out.println("Pronamos ansestros");
+        System.out.println("Ansestros de A1 elemento H espera [A,C,E,H]: "+A1.ansestros('H'));
+        System.out.println("Ansestros de A1 elemento Z espera Lista Vacia: "+A1.ansestros('Z'));
+        System.out.println("Ansestros de A1 elemento D espera [A,B,D]: "+A1.ansestros('D'));
+        System.out.println("Ansestros de A1 elemento A espera [A]: "+A1.ansestros('A'));
     }
 }
