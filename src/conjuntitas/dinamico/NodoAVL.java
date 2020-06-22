@@ -31,23 +31,10 @@ public class NodoAVL {
     }
     
     public void recalcularAltura(){
-        if(this.izquirdo != null || this.derecho != null){
-            //tiene al menos un hijo por lo cual vamos a comparar sus alturas 
-            int alturaDerecho = 0;
-            int alturaIzquierdo = 0;
-            
-            if(this.izquirdo != null){
-                alturaIzquierdo = this.izquirdo.getAltura();
-            }
-            
-            if(this.derecho != null){
-                alturaDerecho = this.derecho.getAltura();
-            }
-            
-            this.altura = Math.max(alturaIzquierdo, alturaDerecho) + 1;
-        }else{
-            this.altura = 0;
-        }
+        //tiene al menos un hijo por lo cual vamos a comparar sus alturas 
+        int alturaDerecho = (this.derecho != null)? -1 : this.derecho.getAltura();
+        int alturaIzquierdo = (this.izquirdo != null)? -1 : this.izquirdo.getAltura();
+        this.altura = Math.max(alturaIzquierdo, alturaDerecho) + 1;
     }
     
     public void setIzquierdo(NodoAVL argNodoIzquierdo){
