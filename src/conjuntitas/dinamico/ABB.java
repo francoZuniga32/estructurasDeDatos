@@ -95,9 +95,9 @@ public class ABB {
         if (this.raiz != null) {
             if (this.raiz.getElemento().equals(elemento)) {
                 //eliminamos la raiz por lo cual se refefine dicha raiz
-                this.raiz = eliminarAux1(this.raiz);
+                this.raiz = remplazar(this.raiz);
                 retorno = true;
-            } else if (this.raiz.getElemento().compareTo(elemento) < 0) {
+            } else if (this.raiz.getElemento().compareTo(elemento) > 0) {
                 retorno = eliminarAux(this.raiz, this.raiz.getIzquierdo(), elemento, 'I');
             } else {
                 retorno = eliminarAux(this.raiz, this.raiz.getDerecho(), elemento, 'D');
@@ -122,8 +122,9 @@ public class ABB {
         
         if (subRaiz != null) {
             Comparable x = subRaiz.getElemento();
+            
             if (x.equals(elemento)) {
-                NodoBB remplazo = eliminarAux1(subRaiz);
+                NodoBB remplazo = remplazar(subRaiz);
                 //en caso de que la raiz del subarbol sea el elemento se verifica alguna de las condiciones
                 if (hijo == 'I') {
                     padre.setIzquierdo(remplazo);
@@ -132,21 +133,25 @@ public class ABB {
                     padre.setDerecho(remplazo);
                 }
                 retorno = true;
-            } else if (x.compareTo(elemento) < 0) {
-                retorno = eliminarAux(subRaiz, subRaiz.getIzquierdo(), elemento, 'I');
-            } else {
-                retorno = eliminarAux(subRaiz, subRaiz.getDerecho(), elemento, 'D');
+            } else{
+                if (x.compareTo(elemento) > 0) {
+                    retorno = eliminarAux(subRaiz, subRaiz.getIzquierdo(), elemento, 'I');
+                } else {
+                    retorno = eliminarAux(subRaiz, subRaiz.getDerecho(), elemento, 'D');
+                }
             }
         }
         return retorno;
     }
+    
+    
 
-    private NodoBB eliminarAux1(NodoBB subRaiz) {
+    private NodoBB remplazar(NodoBB subRaiz) {
         NodoBB remplazo = null;
         //evaluamos la condicion de dicho subarbol
-        switch (condicion(subRaiz)) {
+        switch (condicion(subRaiz)){
             case 0:
-                remplazo = metodo1();
+                remplazo = null;
                 break;
             case 1:
                 remplazo = metodo2(subRaiz);
@@ -172,13 +177,8 @@ public class ABB {
         return retorno;
     }
 
-    //soy el mejor <3 <3
-    private NodoBB metodo1() {
-        return null;
-    }
-
     private NodoBB metodo2(NodoBB nodo) {
-        NodoBB retorno = null;
+        NodoBB retorno;
         if (nodo.getIzquierdo() != null) {
             retorno = nodo.getIzquierdo();
         } else {
@@ -188,20 +188,14 @@ public class ABB {
     }
 
     private NodoBB metodo3(NodoBB nodo) {
-        //obtenemos los candidatos de los cuales sacamos a los hijos 
-        //el que tenga menor cantidad de hijos es el candidato elegido
-        NodoBB retorno = null;
-        boolean completado = false;
-        //obtenemos los candidatos
-        NodoBB candidatoB = candidatoB(nodo.getDerecho());
-        //obtenemos el valor de este nodo y eliminamos por ese lado
-        nodo.setElemento(candidatoB.getElemento());
+        //obtenemos nuestro candidato
+        NodoBB candidatoDerecho = candidatoB(nodo.getDerecho());
+        //obtenemos el valor de este nodo
+        nodo.setElemento(candidatoDerecho.getElemento());
         //eliminamos el elemento de candidato a por D
-        completado = eliminarAux(nodo, nodo.getDerecho(), candidatoB.getElemento(), 'D');
-        if (completado) {
-            retorno = nodo;
-        }
-        return retorno;
+        eliminarAux(nodo, nodo.getDerecho(), candidatoDerecho.getElemento(), 'D');
+        //retornamos el nuevo nodo
+        return nodo;
     }
 
     private int cantidadHijos(NodoBB nodo) {
@@ -209,11 +203,9 @@ public class ABB {
         if (nodo.getIzquierdo() != null && nodo.getDerecho() != null) {
             //tiene los dos hijos
             hijos = 2;
-        } else {
-            if (nodo.getIzquierdo() != null && nodo.getDerecho() == null) {
-                //tiene al menos un hijo
-                hijos = 1;
-            }
+        } else if (nodo.getIzquierdo() != null && nodo.getDerecho() == null) {
+            //tiene al menos un hijo
+            hijos = 1;
         }
         //en caso de que no pase por ningun if no tiene hijos
         return hijos;
@@ -503,4 +495,122 @@ public class ABB {
         }
         return retorno;
     }
+    
+    
+    //agragados parcial
+    
+    /***
+     * dado un elemento, eliminamos del arbol todos los mayores a ese
+     * @param elemento 
+     */
+    public void eliminarMayores(Comparable elemento){
+        if(this.raiz != null){
+            Comparable elementoRaiz = this.raiz.getElemento();
+            if(elementoRaiz.compareTo(elemento) >= 0){
+                this.raiz = primerMenor(this.raiz, elemento);
+            }else{
+                eliminarMayoresAux(this.raiz, this.raiz.getDerecho(), elemento);
+            }
+        }
+    }
+    
+    /***
+     * si la raiz no esta en mayor al valor dado, vamos a buscar los nodos menores
+     * al valor dado y de hay vamos a eliminar a los mayores
+     * @param padre
+     * @param nodo
+     * @param elemento 
+     */
+    private void eliminarMayoresAux(NodoBB padre, NodoBB nodo, Comparable elemento){
+        if(nodo != null){
+            if(nodo.getElemento().compareTo(elemento) >= 0){
+                padre.setDerecho(nodo.getIzquierdo());
+                eliminarMayoresAux(nodo, nodo.getDerecho(), elemento);
+            }else{
+                eliminarMayoresAux(nodo, nodo.getDerecho(), elemento);
+            }
+        }
+    }
+    
+    private NodoBB primerMenor(NodoBB nodo, Comparable elemento){
+        NodoBB retorno = null;
+        if(nodo != null){
+            if(nodo.getElemento().compareTo(elemento) < 0){
+                if(nodo.getDerecho() != null){
+                    nodo.setDerecho(primerMenor(nodo.getDerecho(), elemento));
+                }
+                retorno = nodo;
+            }else{
+                retorno = primerMenor(nodo.getIzquierdo(), elemento);
+            }
+        }
+        return retorno;
+    }
+    
+    
+    public void eliminarMenores(Comparable elemento){
+        if(this.raiz != null){
+            Comparable elementoRaiz = this.raiz.getElemento();
+            if(elementoRaiz.compareTo(elemento) <= 0){
+                this.raiz = primerMayor(this.raiz, elemento);
+            }else{
+                eliminarMenoresAux(this.raiz, this.raiz.getIzquierdo(), elemento);
+            }
+        }
+    }
+    
+    private void eliminarMenoresAux(NodoBB padre, NodoBB nodo, Comparable elemento){
+        if(nodo != null){
+            if(nodo.getElemento().compareTo(elemento) <= 0){
+                padre.setIzquierdo(nodo.getDerecho());
+                eliminarMenoresAux(nodo, nodo.getIzquierdo(), elemento);
+            }else{
+                eliminarMenoresAux(nodo, nodo.getIzquierdo(), elemento);
+            }
+        }
+    }
+    
+    private NodoBB primerMayor(NodoBB nodo, Comparable elemento){
+        NodoBB retorno = null;
+        if(nodo != null){
+            if(nodo.getElemento().compareTo(elemento) > 0){
+                if(nodo.getIzquierdo()!= null){
+                    nodo.setIzquierdo(primerMenor(nodo.getIzquierdo(), elemento));
+                }
+                retorno = nodo;
+            }else{
+                retorno = primerMenor(nodo.getDerecho(), elemento);
+            }
+        }
+        return retorno;
+    }
+   
+    
+    public ABB clonarRango(Comparable minimo, Comparable maximo){
+        ABB clon = new ABB();
+        if (this.raiz != null && minimo.compareTo(maximo) < 0) {
+            clon.raiz = clonarRangoAux(minimo, maximo, this.raiz);
+        }
+        return clon;
+    }
+    
+    private NodoBB clonarRangoAux(Comparable minimo, Comparable maximo, NodoBB node) {
+        if (node != null) {
+            NodoBB hd = node.getDerecho();
+            NodoBB hi = node.getIzquierdo();
+            Comparable elem = node.getElemento();
+            if (elem.compareTo(minimo) >= 0 && elem.compareTo(maximo) <= 0) {
+                node = new NodoBB(elem, null, null);
+                node.setDerecho(clonarRangoAux(minimo, maximo, hd));
+                node.setIzquierdo(clonarRangoAux(minimo, maximo, hi));
+            } else {
+                node = clonarRangoAux(minimo, maximo, hi);
+                if(node == null){
+                    node = clonarRangoAux(minimo, maximo, hd);
+                }
+            }
+        }
+        return node;
+    }
+    
 }
