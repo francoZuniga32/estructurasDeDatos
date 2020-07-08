@@ -613,4 +613,42 @@ public class ABB {
         return node;
     }
     
+    public int amplitudSurabol(Comparable elemento){
+        int retorno = -1;
+        if(this.raiz != null){
+            retorno = amplitudAux(this.raiz, elemento);
+        }
+        return retorno;
+    }
+    
+    private int amplitudAux(NodoBB nodo,Comparable elemento){
+        int retorno = -1;
+        NodoBB izquierdo = nodo.getIzquierdo();
+        NodoBB derecho = nodo.getDerecho();
+        //tenemos que tener al menos un hijo par apodever pasar
+        if(izquierdo != null || derecho != null){
+            Comparable elem = nodo.getElemento();
+            if(elem.equals(elemento)){
+                //pasamos a realizar el calculo de aplitud
+                int valorRaiz = (int) elem;
+                int valorIzquiedo = (int) derecho.getElemento();
+                int valorDerecho = (int) izquierdo.getElemento();
+                if(izquierdo != null && derecho != null){
+                    retorno = valorDerecho - valorIzquiedo;
+                }else if(izquierdo != null){
+                    retorno = valorRaiz - valorIzquiedo;
+                }else{
+                    retorno = valorDerecho - valorRaiz;
+                }
+            }else if(elemento.compareTo(elem) < 0){
+                //si el elemento es menor pasamos a buscar pode la izquierda
+                retorno = amplitudAux(izquierdo, elemento);
+            }else{
+                //sino por la derecha
+                retorno = amplitudAux(derecho, elemento);
+            }
+        }
+        return retorno;
+    }
+    
 }
