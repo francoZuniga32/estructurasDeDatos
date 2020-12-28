@@ -4,6 +4,11 @@ public class NodoAdy {
 	private NodoVertice NodoVert;
 	private NodoAdy NodoAdy;
 	
+	public NodoAdy(NodoVertice nodoVert, NodoAdy nodoAdy) {
+		this.NodoVert = nodoVert;
+		this.NodoAdy = nodoAdy;
+	}
+	
 	public NodoVertice getVertice() {
 		return this.NodoVert;
 	}
