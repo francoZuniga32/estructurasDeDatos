@@ -9,12 +9,12 @@ package grafos;
  *
  * @author franco
  */
-public class NodoVertice {
+public class Vertice {
     private Object elemento;
-    private NodoVertice sigVertice;
-    private NodoAdy primerAdy;
+    private Vertice sigVertice;
+    private Adyacente primerAdy;
     
-    public NodoVertice(Object elem, NodoVertice nodoVertice, NodoAdy nodoAdy) {
+    public Vertice(Object elem, Vertice nodoVertice, Adyacente nodoAdy) {
     	this.elemento = elem;
     	this.sigVertice = nodoVertice;
     	this.primerAdy = nodoAdy;
@@ -26,11 +26,11 @@ public class NodoVertice {
     	return this.elemento;
     }
     
-    public NodoVertice getSigVertice(){
+    public Vertice getSigVertice(){
     	return this.sigVertice;
     }
     
-    public NodoAdy getNodoAdy() {
+    public Adyacente getAdyacente() {
     	return this.primerAdy;
     }
     
@@ -40,11 +40,11 @@ public class NodoVertice {
     	this.elemento = elem;
     }
     
-    public void setSigVertice(NodoVertice nodo) {
+    public void setSigVertice(Vertice nodo) {
     	this.sigVertice = nodo;
     }
     
-    public void setNodoAdy(NodoAdy nodo) {
+    public void setAdyacente(Adyacente nodo) {
     	this.primerAdy = nodo;
     }
 }

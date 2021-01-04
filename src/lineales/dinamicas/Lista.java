@@ -126,7 +126,7 @@ public class Lista{
         
         while( i <= this.longitud() && !control ){
             //cuando lo encontremos cortamos y retornamos al pocicion donde se encontro
-            if(aux.getElemento().toString().compareTo(elemento.toString()) == 0){
+            if(aux.getElemento().equals(elemento)){
                 control = true;
                 retorno = i;
             }else{
