@@ -1,21 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package grafos;
 import lineales.dinamicas.*;
-/**
- *
- * @author franco
- */
-public class Grafo {
-    private Vertice inicio;
+
+public class Digrafo {
+private Vertice inicio;
     
     /**
      * Creamos un grafo vacio
      */
-    public Grafo() {
+    public Digrafo() {
     	this.inicio = null;
     }
     
@@ -32,11 +24,9 @@ public class Grafo {
     		retorno = true;
     	}else {
     		if(!nodo.getElemento().equals(element)) {
-    			boolean control = false;
     			while(nodo.getSigVertice() != null && !nodo.getSigVertice().getElemento().equals(element)) {
     				nodo = nodo.getSigVertice();
     			}
-    			
     			if(nodo.getSigVertice() == null) {
     				nodo.setSigVertice(new Vertice(element, null, null));
     				retorno = true;
@@ -131,12 +121,8 @@ public class Grafo {
     	Vertice nodoA = this.ubicarNodo(verticeA);
     	Vertice nodoB = this.ubicarNodo(verticeB);
     	
-    	
     	if(nodoA != null && nodoB != null) {
-    		Adyacente adyacenteA = nodoA.getAdyacente();
-    		Adyacente adyacenteB = nodoB.getAdyacente();
-    		
-    		//eliminamos la primera paricion de nodoB
+    		Adyacente adyacenteA = nodoA.getAdyacente();	
     		if(adyacenteA != null) {
     			while(adyacenteA.getSiguienteAdy() != null) {
     				adyacenteA = adyacenteA.getSiguienteAdy();
@@ -145,17 +131,7 @@ public class Grafo {
     			retorno = true;
     		}else {
     			nodoA.setAdyacente(new Adyacente(nodoB, null));
-    		}
-    		
-    		if(adyacenteB != null) {
-    			if(!verticeB.equals(verticeA)) {
-    				while(adyacenteB.getSiguienteAdy() != null) {
-        				adyacenteB = adyacenteB.getSiguienteAdy();
-        			}
-        			adyacenteB.setSiguienteAdy(new Adyacente(nodoA, null));	
-    			}
-    		}else{
-    			nodoB.setAdyacente(new Adyacente(nodoA, null));
+    			retorno = true;
     		}
     	}
     	return retorno;
@@ -505,8 +481,8 @@ public class Grafo {
     /**
      * retorna un clon del grafo actual
      */
-    public Grafo clone() {
-    	Grafo G2 = new Grafo();
+    public Digrafo clone() {
+    	Digrafo G2 = new Digrafo();
     	//clonamos el inicio
     	if(!this.esVacio()) {
     		G2.inicio = new Vertice(this.inicio.getElemento(), null, null);

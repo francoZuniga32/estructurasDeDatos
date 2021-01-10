@@ -1,9 +1,9 @@
 package grafos;
 
-public class testGrafos {
-	public static void main(String[]args) {
-		//comenzamos credo un grafo
-		Grafo G = new Grafo();
+public class digrafoTest {
+	
+	public static void main(String[] args) {
+		Digrafo G = new Digrafo();
 		//testemos la inserccion del grafo
 		System.out.println("Testeamos vertices:");
 		System.out.println("insertamos A en el grafo: Espera OK \t"+( G.insertarVertice('A') ? "Ok": "False"));
@@ -42,8 +42,7 @@ public class testGrafos {
 		System.out.println("Eliminamos un vertice con arcos: Espera Ok:"+(G.eliminarVertice('C')? "Ok": "False"));
 		System.out.println(G.toString());
 		//evaluamos la caminos
-		System.out.println("Testeamos Caminos:");
-		
+		System.out.println("Testeamos Caminos:");		
 		System.out.println("existe camino entre A y D: Espera Ok \t"+(G.existeCamino('A', 'D')? "Ok": "False"));
 		System.out.println("existe camino entre A y E: Espera Ok \t"+(G.existeCamino('A', 'E')? "Ok": "False"));
 		System.out.println("inseramos F en el grafo: Espera Ok \t"+(G.insertarVertice('F')? "Ok": "False"));
@@ -56,8 +55,8 @@ public class testGrafos {
 		System.out.println("listamos en profundiad: "+G.listarEnProfundidad().toString());
 		System.out.println("listamos en anchura: "+G.listarEnAnchura().toString());
 		System.out.println("Testemos otras operaciones de grafo");
-		Grafo G2 = G.clone();
-		Grafo G3 = new Grafo();
+		Digrafo G2 = G.clone();
+		Digrafo G3 = new Digrafo();
 		System.out.println("grafo clonado: \n"+G2.toString());
 		System.out.println("Es vacio G2: Espera False \t"+(G2.esVacio()? "Ok": "False"));
 		System.out.println("Es vacio G3: Espera Ok \t"+(G3.esVacio()? "Ok": "False"));

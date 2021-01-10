@@ -1,6 +1,7 @@
+package tests.lineales;
 import lineales.dinamicas.*;
 import jerarquicas.dinamico.*;
-package tests.lineales;
+
 /**
  *
  * @author franco
