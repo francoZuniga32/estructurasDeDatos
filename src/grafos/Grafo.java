@@ -273,7 +273,7 @@ public class Grafo {
      * @param visitados
      * @return true en caso de existir el camino, false caso contrario
      */
-    public boolean existeCaminoAux(Vertice inicio, Vertice destino, Lista visitados) {
+    private boolean existeCaminoAux(Vertice inicio, Vertice destino, Lista visitados) {
     	boolean retorno = false;
     	
     	if(inicio != null) {

@@ -58,11 +58,7 @@ public class Cola {
    }
    
    public boolean esVacia(){
-       boolean retorno = true;
-       if(this.frente != null){
-           retorno = false;
-       }
-       return retorno;
+       return this.frente == null;
    }
    
     public void vaciar(){

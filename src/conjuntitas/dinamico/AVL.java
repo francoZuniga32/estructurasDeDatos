@@ -546,6 +546,34 @@ public class AVL {
         return retorno;
     }
     
+    public Object recuperar(Comparable elemento) {
+    	Object retorno = null;
+    	if(this.raiz != null){
+            retorno = perteneceAux(this.raiz, elemento);
+        }
+    	return retorno;
+    }
+    
+    private Object recuperarAux(NodoAVL subRaiz, Comparable elemento){
+    	Object retorno = null;
+        //si el nodo no es null
+        if(subRaiz != null){
+            //si el elemento es ta en esta nodo retorno true
+            if(subRaiz.getElemento().equals(elemento)){
+                retorno = subRaiz.getClass();
+            }else{
+                //sino busco si es menor a el nodo por HI
+                if(subRaiz.getElemento().compareTo(elemento) > 0){
+                    retorno = perteneceAux(subRaiz.getIzquierdo(), elemento);
+                }else{
+                    //sino busco por el ID
+                    retorno = perteneceAux(subRaiz.getDerecho(), elemento);
+                }
+            }
+        }
+        return retorno;
+    }
+    
     /***
      * evelua si un arbol esta vacio
      * @return true si esta vacio, sino false
