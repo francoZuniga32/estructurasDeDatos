@@ -1,6 +1,8 @@
 
 package conjuntitas.test;
-import conjuntitas.dinamico.*;
+
+import conjuntitas.dinamico.AVL;
+
 /**
  *
  * @author franco

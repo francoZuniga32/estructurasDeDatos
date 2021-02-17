@@ -32,8 +32,8 @@ public class NodoAVL {
     
     public void recalcularAltura(){
         //tiene al menos un hijo por lo cual vamos a comparar sus alturas 
-        int alturaDerecho = (this.derecho != null)? -1 : this.derecho.getAltura();
-        int alturaIzquierdo = (this.izquirdo != null)? -1 : this.izquirdo.getAltura();
+        int alturaDerecho = (this.derecho == null)? -1 : this.derecho.getAltura();
+        int alturaIzquierdo = (this.izquirdo == null)? -1 : this.izquirdo.getAltura();
         this.altura = Math.max(alturaIzquierdo, alturaDerecho) + 1;
     }
     
