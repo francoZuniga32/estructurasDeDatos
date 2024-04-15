@@ -15,30 +15,17 @@ Este es mi repositorio de GitHub de la materia Estructura de Datos de la carrera
 (En caso de que uses Visual Studio, supondré que tienes conocimientos avanzados :nerd_face:).
 
 ## Estructuras 
-- Lineales
-  - Dinámicas
-    - Pila 
-    - Cola
-    - Listas
-  - Estáticas
-    - Pila
-    - Cola
-- Jerárquicas
-  - Dinámicas
-    - Árbol Binario
-    - Árbol Genérico
-  - Estáticas
-    - Árbol Binario
-- Conjuntistas
-  - Dinámicas
-    - Árbol Binario de Búsqueda (ABB)
-    - Árbol Binario Auto-Balanceado (AVL)
-  - Estáticas
+- [Lineales](src/lineales/README.md)
+  - Pila 
+  - Cola
+  - Listas
+- [Jerárquicas](src/jerarquicas/README.md)
+  - Árbol Binario
+  - Árbol Genérico
+- [Conjuntistas](src/conjuntitas/README.md)
+  - Árbol Binario de Búsqueda (ABB)
+  - Árbol Binario Auto-Balanceado (AVL)
   - Árbol Heap Máximo
-- Grafo
-- Estructuras de Propósito Específico
-  - TDA Mapeo
-  - Cola de Prioridad
-  - Tabla de Búsqueda
-
+- [Grafo](src/grafos/README.md)
+  
 Las implementacion de las Estructuras de Proposito Especifico no estan echas, pero se explicara proximamente las que pocee jeva.
